@@ -30,7 +30,7 @@ const SunMoonTimesCard = ({ astro, t, language = 'es' }) => {
   if (!astro) return null;
   const phaseName = getLunarPhaseName(astro.moon_phase, t, language);
   return (
-    <div style={{
+    <div className="sun-moon-glow" style={{
       display: 'flex',
       flexDirection: 'column',
       gap: '1.2rem',

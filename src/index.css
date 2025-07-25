@@ -1,3 +1,22 @@
+/* Animación de resplandor para la tarjeta de Sol y Luna */
+.sun-moon-glow {
+  position: relative;
+  z-index: 1;
+  animation: sunMoonGlow 2.8s ease-in-out infinite alternate;
+  box-shadow: 0 0 24px 0 rgba(255, 230, 102, 0.18), 0 0 48px 0 rgba(125, 183, 255, 0.13);
+}
+
+@keyframes sunMoonGlow {
+  0% {
+    box-shadow: 0 0 24px 0 rgba(255, 230, 102, 0.18), 0 0 48px 0 rgba(125, 183, 255, 0.13);
+  }
+  50% {
+    box-shadow: 0 0 36px 8px rgba(255, 230, 102, 0.32), 0 0 64px 12px rgba(125, 183, 255, 0.22);
+  }
+  100% {
+    box-shadow: 0 0 24px 0 rgba(255, 230, 102, 0.18), 0 0 48px 0 rgba(125, 183, 255, 0.13);
+  }
+}
 /* Gradientes para saludo según momento del día */
 .greeting-gradient {
   position: relative;

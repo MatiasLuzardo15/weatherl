@@ -174,7 +174,7 @@ const WeeklyForecast = ({ forecast, temperatureUnit = 'celsius', language = 'es'
         </div>
       </div>
 
-      {/* Tarjeta sol y luna separada */}
+      {/* Tarjeta sol y luna separada con animación de resplandor */}
       <div style={{ margin: '2.5rem auto 0 auto', maxWidth: 480 }}>
         <SunMoonTimesCard astro={forecast.forecast.forecastday[0].astro} t={t} language={language} />
       </div>
@@ -185,12 +185,4 @@ const WeeklyForecast = ({ forecast, temperatureUnit = 'celsius', language = 'es'
   );
 };
 
-export default function WeeklyForecastWithLunar(props) {
-  return <>
-    <WeeklyForecast {...props} />
-    {/* Tarjeta de fase lunar separada */}
-    <div style={{ margin: '2.5rem auto 0 auto', maxWidth: 480 }}>
-      <LunarPhaseCard astro={props.forecast?.forecast?.forecastday?.[0]?.astro} t={props.t} language={props.language} location={props.location} />
-    </div>
-  </>;
-}
+export default WeeklyForecast;

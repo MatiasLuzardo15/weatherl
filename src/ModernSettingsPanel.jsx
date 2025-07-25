@@ -41,7 +41,7 @@ const ModernSettingsPanel = ({ isOpen, onClose, settings, onSettingsChange }) =>
           
           {/* Settings Panel */}
           <motion.div
-            className="settings-panel-modern"
+            className="settings-panel-modern settings-panel-fullscreen"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
@@ -65,12 +65,11 @@ const ModernSettingsPanel = ({ isOpen, onClose, settings, onSettingsChange }) =>
                   <Globe size={20} style={{ color: '#06b6d4' }} />
                   {t.language}
                 </div>
-                
                 <div className="settings-item-modern">
                   <div className="settings-item-content-modern">
-                    <div className="settings-item-label-modern">Language</div>
+                    <div className="settings-item-label-modern">{t.language}</div>
                     <div className="settings-item-description-modern">
-                      Choose your preferred language
+                      {t.languageDescription || 'Elige tu idioma preferido'}
                     </div>
                   </div>
                   <div className="settings-button-group-modern">
@@ -96,12 +95,11 @@ const ModernSettingsPanel = ({ isOpen, onClose, settings, onSettingsChange }) =>
                   <Thermometer size={20} style={{ color: '#ef4444' }} />
                   {t.temperature}
                 </div>
-                
                 <div className="settings-item-modern">
                   <div className="settings-item-content-modern">
-                    <div className="settings-item-label-modern">Unit</div>
+                    <div className="settings-item-label-modern">{t.unit || 'Unidad'}</div>
                     <div className="settings-item-description-modern">
-                      Choose temperature unit
+                      {t.unitDescription || 'Elige la unidad de temperatura'}
                     </div>
                   </div>
                   <div className="settings-button-group-modern">
@@ -125,14 +123,13 @@ const ModernSettingsPanel = ({ isOpen, onClose, settings, onSettingsChange }) =>
               <div className="settings-section-modern">
                 <div className="settings-section-title-modern">
                   <Clock size={20} style={{ color: '#06b6d4' }} />
-                  Time Format
+                  {t.timeFormat}
                 </div>
-                
                 <div className="settings-item-modern">
                   <div className="settings-item-content-modern">
-                    <div className="settings-item-label-modern">Format</div>
+                    <div className="settings-item-label-modern">{t.timeFormat}</div>
                     <div className="settings-item-description-modern">
-                      Choose time format
+                      {t.timeFormatDescription || 'Elige el formato de hora'}
                     </div>
                   </div>
                   <div className="settings-button-group-modern">
@@ -156,14 +153,13 @@ const ModernSettingsPanel = ({ isOpen, onClose, settings, onSettingsChange }) =>
               <div className="settings-section-modern">
                 <div className="settings-section-title-modern">
                   <Sparkles size={20} style={{ color: '#8b5cf6' }} />
-                  Features
+                  {t.features}
                 </div>
-                
                 <div className="settings-item-modern">
                   <div className="settings-item-content-modern">
-                    <div className="settings-item-label-modern">Motivational Phrases</div>
+                    <div className="settings-item-label-modern">{t.showPhrase}</div>
                     <div className="settings-item-description-modern">
-                      Show weather-based motivational quotes
+                      {t.showPhraseDescription || 'Mostrar frases motivacionales según el clima'}
                     </div>
                   </div>
                   <div 
@@ -173,32 +169,16 @@ const ModernSettingsPanel = ({ isOpen, onClose, settings, onSettingsChange }) =>
                     <div className="settings-toggle-knob-modern"></div>
                   </div>
                 </div>
-
                 <div className="settings-item-modern">
                   <div className="settings-item-content-modern">
-                    <div className="settings-item-label-modern">Auto Location</div>
+                    <div className="settings-item-label-modern">{t.autoLocation}</div>
                     <div className="settings-item-description-modern">
-                      Automatically detect your location
+                      {t.autoLocationDescription || 'Detectar ubicación automáticamente'}
                     </div>
                   </div>
                   <div 
                     className={`settings-toggle-modern ${settings.autoLocation ? 'active' : ''}`}
                     onClick={() => toggleSetting('autoLocation')}
-                  >
-                    <div className="settings-toggle-knob-modern"></div>
-                  </div>
-                </div>
-
-                <div className="settings-item-modern">
-                  <div className="settings-item-content-modern">
-                    <div className="settings-item-label-modern">Notifications</div>
-                    <div className="settings-item-description-modern">
-                      Enable weather notifications
-                    </div>
-                  </div>
-                  <div 
-                    className={`settings-toggle-modern ${settings.showNotifications ? 'active' : ''}`}
-                    onClick={() => toggleSetting('showNotifications')}
                   >
                     <div className="settings-toggle-knob-modern"></div>
                   </div>
@@ -209,9 +189,8 @@ const ModernSettingsPanel = ({ isOpen, onClose, settings, onSettingsChange }) =>
               <div className="settings-section-modern">
                 <div className="settings-section-title-modern">
                   <Palette size={20} style={{ color: '#f59e0b' }} />
-                  Dynamic Themes
+                  {t.dynamicThemes || 'Temas dinámicos'}
                 </div>
-                
                 <div style={{
                   padding: '1rem',
                   background: 'rgba(255, 255, 255, 0.05)',
@@ -222,8 +201,7 @@ const ModernSettingsPanel = ({ isOpen, onClose, settings, onSettingsChange }) =>
                     🌤️ Weather-Based Themes
                   </div>
                   <div style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.85rem', lineHeight: 1.4 }}>
-                    The app automatically changes colors based on current weather conditions:
-                    ☀️ Sunny, ⛅ Cloudy, 🌧️ Rainy, 🌙 Night, ❄️ Snow, ⛈️ Storm
+                    {t.dynamicThemesDescription || 'La app cambia los colores según el clima actual: ☀️ Soleado, ⛅ Nublado, 🌧️ Lluvia, 🌙 Noche, ❄️ Nieve, ⛈️ Tormenta'}
                   </div>
                 </div>
               </div>

@@ -48,6 +48,15 @@ export const LANGUAGES = {
     spanish: "Español",
     english: "Inglés",
     
+    // Settings descriptions
+    languageDescription: "Elige tu idioma preferido",
+    unit: "Unidad",
+    unitDescription: "Elige la unidad de temperatura",
+    timeFormatDescription: "Elige el formato de hora",
+    showPhraseDescription: "Mostrar frases motivacionales según el clima",
+    autoLocationDescription: "Detectar ubicación automáticamente",
+    dynamicThemesDescription: "La app cambia los colores según el clima actual: ☀️ Soleado, ⛅ Nublado, 🌧️ Lluvia, 🌙 Noche, ❄️ Nieve, ⛈️ Tormenta",
+    
     // Greetings
     goodMorning: "Buenos Días",
     goodAfternoon: "Buenas Tardes",
@@ -113,6 +122,15 @@ export const LANGUAGES = {
     language: "Language",
     spanish: "Spanish",
     english: "English",
+    
+    // Settings descriptions
+    languageDescription: "Choose your preferred language",
+    unit: "Unit",
+    unitDescription: "Choose temperature unit",
+    timeFormatDescription: "Choose time format",
+    showPhraseDescription: "Show weather-based motivational quotes",
+    autoLocationDescription: "Automatically detect your location",
+    dynamicThemesDescription: "The app automatically changes colors based on current weather conditions: ☀️ Sunny, ⛅ Cloudy, 🌧️ Rainy, 🌙 Night, ❄️ Snow, ⛈️ Storm",
     
     // Greetings
     goodMorning: "Good Morning",

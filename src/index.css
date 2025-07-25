@@ -2645,3 +2645,361 @@ body {
     font-size: 0.75rem;
   }
 }
+
+/* Detalles del día semanal - Modal */
+.weekly-detail-modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 24, 38, 0.38);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s;
+}
+
+.weekly-detail-modal {
+  background: rgba(255,255,255,0.13);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+  min-width: 90vw;
+  max-width: 400px;
+  color: #fff;
+  position: relative;
+  animation: popIn 0.22s;
+}
+
+.weekly-detail-close {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+  z-index: 2;
+}
+.weekly-detail-close:hover {
+  opacity: 1;
+}
+
+.weekly-detail-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.1rem;
+}
+.weekly-detail-date {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  margin-bottom: 0.2rem;
+}
+.weekly-detail-condition {
+  font-size: 1rem;
+  color: #e6e6e6;
+  margin-bottom: 0.5rem;
+}
+.weekly-detail-temps {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.1rem;
+}
+.weekly-detail-temp-high {
+  color: #fff;
+}
+.weekly-detail-temp-low {
+  color: #b3c6e0;
+}
+.weekly-detail-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem 1.2rem;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+@media (max-width: 600px) {
+  .weekly-detail-modal {
+    min-width: 98vw;
+    max-width: 98vw;
+    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+  }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes popIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* === ANIMACIONES DE CLIMA === */
+.weather-bg-lluvia {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+.rain-drop {
+  position: absolute;
+  width: 2px;
+  height: 18px;
+  background: linear-gradient(180deg, #aeeaff 0%, #4fc3f7 100%);
+  border-radius: 1px;
+  opacity: 0.7;
+  animation: rain-fall 0.9s linear infinite;
+}
+@keyframes rain-fall {
+  0% { transform: translateY(-30px); opacity: 0.7; }
+  80% { opacity: 0.8; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.weather-bg-nieve {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+.snow-flake {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0.8;
+  filter: blur(0.5px);
+  animation: snow-fall 2.5s linear infinite;
+}
+@keyframes snow-fall {
+  0% { transform: translateY(-20px); opacity: 0.8; }
+  100% { transform: translateY(100vh); opacity: 0.2; }
+}
+
+.weather-bg-nubes {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+.cloud-anim {
+  position: absolute;
+  width: 80px;
+  height: 40px;
+  background: #e0e7ef;
+  border-radius: 50px 50px 40px 40px;
+  opacity: 0.4;
+  filter: blur(2px);
+  animation: cloud-move 18s linear infinite;
+}
+@keyframes cloud-move {
+  0% { left: -100px; }
+  100% { left: 110vw; }
+}
+
+.weather-bg-sol {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+.sun-ray {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe259 60%, #ffa751 100%);
+  box-shadow: 0 0 60px 20px #ffe25988;
+  opacity: 0.7;
+  margin: 2.5rem 2.5rem 0 0;
+  animation: sun-pulse 2.5s ease-in-out infinite;
+}
+@keyframes sun-pulse {
+  0%, 100% { opacity: 0.7; box-shadow: 0 0 60px 20px #ffe25988; }
+  50% { opacity: 1; box-shadow: 0 0 90px 40px #ffe259cc; }
+}
+
+@media (max-width: 700px) {
+  .settings-panel-modern.settings-panel-fullscreen {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+    border: none !important;
+    z-index: 1002 !important;
+    background: rgba(20,24,38,0.98) !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    overflow-y: auto !important;
+    display: flex;
+    flex-direction: column;
+  }
+  .settings-content-modern {
+    padding: 0.5rem 0.5rem 2.5rem 0.5rem !important;
+    min-height: 100vh;
+  }
+  .settings-header-modern {
+    padding-top: 1.2rem !important;
+    padding-bottom: 1.2rem !important;
+  }
+}
+
+/* Tarjeta de fase lunar */
+.lunar-phase-card {
+  background: linear-gradient(135deg, rgba(40, 60, 120, 0.22) 0%, rgba(80, 120, 255, 0.18) 100%);
+  border-radius: 1.3rem;
+  box-shadow: 0 4px 24px 0 rgba(30, 60, 120, 0.13);
+  border: 1.5px solid rgba(255,255,255,0.18);
+  color: #fff;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding: 1.2rem 1.1rem 1.1rem 1.1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  transition: box-shadow 0.18s;
+}
+.lunar-phase-card .highlight-header-modern {
+  color: #ffd700;
+}
+.lunar-phase-card .highlight-value-modern {
+  color: #fffbe7;
+  font-weight: 600;
+}
+.lunar-phase-card .highlight-label-modern {
+  color: #ffd700;
+  font-weight: 500;
+}
+.lunar-phase-card svg {
+  color: #ffd700 !important;
+}
+
+/* City Picker iOS Styles */
+.city-picker-ios-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(20,24,38,0.38);
+  backdrop-filter: blur(8px);
+  z-index: 1200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.city-picker-ios {
+  width: 100vw;
+  max-width: 480px;
+  background: rgba(255,255,255,0.98);
+  border-radius: 1.5rem 1.5rem 0 0;
+  box-shadow: 0 -8px 32px rgba(0,0,0,0.18);
+  padding: 1.2rem 1.2rem 0.7rem 1.2rem;
+  color: #222;
+  animation: pickerUp 0.22s;
+}
+.city-picker-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0.7rem;
+  color: #222;
+}
+.city-picker-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 38vh;
+  overflow-y: auto;
+}
+/* Minimalista y moderno para opciones de ciudad */
+.city-picker-option {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0.85rem 0.5rem;
+  font-size: 1.08rem;
+  color: #222;
+  text-align: left;
+  border-radius: 0.7rem;
+  margin-bottom: 0.18rem;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s, color 0.15s;
+  outline: none;
+  border-bottom: 1px solid #f1f1f1;
+}
+.city-picker-option:last-child {
+  border-bottom: none;
+}
+.city-picker-option:hover,
+.city-picker-option:focus {
+  background: #f6f8fa;
+  color: #007aff;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
+}
+.city-picker-option:active {
+  background: #e5e7eb;
+  color: #005bb5;
+}
+.city-picker-cancel {
+  width: 100%;
+  background: #f1f5fb;
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem 0;
+  font-size: 1.08rem;
+  color: #ff3b30;
+  margin-top: 0.7rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+@keyframes pickerUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* Dropdown de sugerencias de ciudades */
+.city-dropdown-list {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 110%;
+  background: rgba(255,255,255,0.98);
+  border-radius: 1.1rem;
+  box-shadow: 0 4px 24px 0 rgba(30, 60, 120, 0.13);
+  z-index: 100;
+  margin: 0;
+  padding: 0.3rem 0;
+  list-style: none;
+  max-height: 220px;
+  overflow-y: auto;
+}
+.city-dropdown-option {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  font-size: 1.05rem;
+  color: #007aff;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: background 0.13s;
+  border-radius: 0;
+}
+.city-dropdown-option:last-child {
+  border-bottom: none;
+}
+.city-dropdown-option:hover, .city-dropdown-option:focus {
+  background: #f1f5fb;
+}

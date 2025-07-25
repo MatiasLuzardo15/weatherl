@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Sun, 
   Cloud, 
@@ -12,8 +12,12 @@ import {
   Thermometer
 } from 'lucide-react';
 import { LANGUAGES } from './languages';
+import WeeklyDayDetail from './WeeklyDayDetail';
+import LunarPhaseCard from './LunarPhaseCard';
 
 const WeeklyForecast = ({ forecast, temperatureUnit = 'celsius', language = 'es' }) => {
+  const [selectedDay, setSelectedDay] = useState(null);
+
   if (!forecast) return null;
 
   // Get current language texts
@@ -80,8 +84,13 @@ const WeeklyForecast = ({ forecast, temperatureUnit = 'celsius', language = 'es'
         <h3 className="weekly-title-modern">{t.weeklyForecast}</h3>
         
         <div className="weekly-forecast-grid">
-          {forecast.forecast.forecastday.map((day, index) => {
-            const isToday = index === 0;
+          {forecast.forecast.forecastday.map((day) => {
+            // Corregir el marcado de "Hoy" comparando fechas
+            const today = new Date();
+            const dayDate = new Date(day.date);
+            const isToday = today.getFullYear() === dayDate.getFullYear() &&
+                            today.getMonth() === dayDate.getMonth() &&
+                            today.getDate() === dayDate.getDate();
             const tempRange = getTemperatureRange(
               day.day.mintemp_c, 
               day.day.maxtemp_c, 
@@ -92,7 +101,9 @@ const WeeklyForecast = ({ forecast, temperatureUnit = 'celsius', language = 'es'
             return (
               <div 
                 key={day.date} 
-                className={`weekly-day-card ${isToday ? 'today' : ''}`}
+                className={`weekly-day-card${isToday ? ' today' : ''}`}
+                onClick={() => setSelectedDay(day)}
+                style={{ cursor: 'pointer' }}
               >
                 <div className="weekly-day-header">
                   <div className="weekly-day-name">
@@ -142,26 +153,27 @@ const WeeklyForecast = ({ forecast, temperatureUnit = 'celsius', language = 'es'
             <div className="weekly-stat-label">Humidity</div>
             <div className="weekly-stat-value">{weeklyAvg.humidity}%</div>
           </div>
-          
           <div className="weekly-stat-card">
             <Wind size={14} className="weekly-stat-icon" />
             <div className="weekly-stat-label">Wind</div>
             <div className="weekly-stat-value">{weeklyAvg.wind} km/h</div>
           </div>
-          
           <div className="weekly-stat-card">
             <Eye size={14} className="weekly-stat-icon" />
             <div className="weekly-stat-label">Visibility</div>
             <div className="weekly-stat-value">{weeklyAvg.visibility} km</div>
           </div>
-          
           <div className="weekly-stat-card">
             <Sun size={14} className="weekly-stat-icon" />
             <div className="weekly-stat-label">UV Index</div>
             <div className="weekly-stat-value">{weeklyAvg.uv}</div>
           </div>
+          {/* Tarjeta de fase lunar */}
+          <LunarPhaseCard astro={forecast.forecast.forecastday[0].astro} t={t} language={language} />
         </div>
       </div>
+
+      <WeeklyDayDetail day={selectedDay} onClose={() => setSelectedDay(null)} />
     </div>
   );
 };

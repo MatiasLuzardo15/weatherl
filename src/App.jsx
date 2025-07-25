@@ -64,6 +64,8 @@ function App() {
   const [showSettings, setShowSettings] = useState(false)
   const [currentPhrase, setCurrentPhrase] = useState('')
   const [activeTab, setActiveTab] = useState('today')
+  const [cityOptions, setCityOptions] = useState([]);
+  const [showCityDropdown, setShowCityDropdown] = useState(false);
 
   useEffect(() => {
     const savedSettings = loadSettings()
@@ -220,14 +222,6 @@ function App() {
     }
   }
 
-
-
-
-
-
-
-
-
   const getBackgroundClass = () => {
     if (!weather) return 'bg-gradient-blue'
     
@@ -303,13 +297,106 @@ function App() {
     return 'theme-cloudy'
   }
 
+  const renderWeatherBackground = () => {
+    if (!weather) return null;
+    const condition = weather.current.condition.text.toLowerCase();
+    if (condition.includes('lluvia') || condition.includes('rain')) {
+      // Lluvia: muchas gotas
+      return (
+        <div className="weather-bg-lluvia">
+          {Array.from({ length: 32 }).map((_, i) => (
+            <div
+              key={i}
+              className="rain-drop"
+              style={{
+                left: `${Math.random() * 100}vw`,
+                animationDelay: `${Math.random() * 0.9}s`,
+                top: `${Math.random() * 10}vh`
+              }}
+            />
+          ))}
+        </div>
+      );
+    } else if (condition.includes('nieve') || condition.includes('snow')) {
+      // Nieve: copos
+      return (
+        <div className="weather-bg-nieve">
+          {Array.from({ length: 22 }).map((_, i) => (
+            <div
+              key={i}
+              className="snow-flake"
+              style={{
+                left: `${Math.random() * 100}vw`,
+                animationDelay: `${Math.random() * 2.5}s`,
+                top: `${Math.random() * 10}vh`
+              }}
+            />
+          ))}
+        </div>
+      );
+    } else if (condition.includes('nube') || condition.includes('cloud') || condition.includes('nublado')) {
+      // Nubes: nubes animadas
+      return (
+        <div className="weather-bg-nubes">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div
+              key={i}
+              className="cloud-anim"
+              style={{
+                top: `${10 + i * 12}vh`,
+                left: `${-80 + i * 60}px`,
+                animationDelay: `${i * 2}s`
+              }}
+            />
+          ))}
+        </div>
+      );
+    } else if (condition.includes('despejado') || condition.includes('soleado') || condition.includes('clear') || condition.includes('sunny')) {
+      // Sol: rayo solar
+      return (
+        <div className="weather-bg-sol">
+          <div className="sun-ray" />
+        </div>
+      );
+    }
+    return null;
+  };
+
   const WeatherIcon = getWeatherIcon()
   const weatherTheme = getWeatherTheme()
+
+  const searchCities = async (query) => {
+    if (!query.trim()) return;
+    const url = `${WEATHER_API_CONFIG.BASE_URL}/search.json?key=${WEATHER_API_CONFIG.API_KEY}&q=${encodeURIComponent(query)}`;
+    const res = await fetch(url);
+    if (!res.ok) return setCityOptions([]);
+    const data = await res.json();
+    setCityOptions(data);
+    setShowCityDropdown(true);
+  };
+
+  const handleCityInput = (e) => {
+    setCity(e.target.value);
+    if (e.target.value.length > 2) {
+      searchCities(e.target.value);
+    } else {
+      setCityOptions([]);
+      setShowCityDropdown(false);
+    }
+  };
+
+  const handleCitySelect = (cityObj) => {
+    setShowCityDropdown(false);
+    setCityOptions([]);
+    setCity(cityObj.name);
+    fetchWeather(cityObj.name);
+  };
 
   return (
     <div 
       className={`min-h-screen weather-app-container ${weatherTheme}`}
     >
+      {renderWeatherBackground()}
       <div className="container">
         {/* Modern Header */}
         <header className="modern-header">
@@ -409,14 +496,42 @@ function App() {
                 lineHeight: '1.7',
                 textShadow: '0 1px 3px rgba(0,0,0,0.13)'
               }}>
-                {(() => {
-                  const temp = Math.round(weather.current.temp_c);
-                  const feels = Math.round(weather.current.feelslike_c);
-                  const wind = Math.round(weather.current.wind_kph);
-                  const humidity = weather.current.humidity;
-                  const condition = weather.current.condition.text;
-                  return `${condition} con temperatura de ${temp}°C, sensación térmica ${feels}°C, viento ${wind} km/h, humedad ${humidity}%, visibilidad ${weather.current.vis_km} km.`;
-                })()}
+                {settings.language === 'en'
+                  ? (() => {
+                      // Descripción completamente en inglés
+                      const temp = Math.round(weather.current.temp_c);
+                      const feels = Math.round(weather.current.feelslike_c);
+                      const wind = Math.round(weather.current.wind_kph);
+                      const humidity = weather.current.humidity;
+                      // Si el API no devuelve la condición en inglés, traducir manualmente lo más común
+                      let condition = weather.current.condition.text;
+                      // Traducción básica de condiciones comunes
+                      const map = {
+                        'Lluvia moderada a intervalos': 'Moderate rain at times',
+                        'Lluvia ligera': 'Light rain',
+                        'Lluvia moderada': 'Moderate rain',
+                        'Nublado': 'Cloudy',
+                        'Despejado': 'Clear',
+                        'Soleado': 'Sunny',
+                        'Parcialmente nublado': 'Partly cloudy',
+                        'Niebla': 'Fog',
+                        'Nieve': 'Snow',
+                        'Tormenta': 'Thunderstorm',
+                        // Agrega más según sea necesario
+                      };
+                      if (map[condition]) condition = map[condition];
+                      return `${condition} with a temperature of ${temp}°C, feels like ${feels}°C, wind ${wind} km/h, humidity ${humidity}%, visibility ${weather.current.vis_km} km.`;
+                    })()
+                  : (() => {
+                      // Descripción en español
+                      const temp = Math.round(weather.current.temp_c);
+                      const feels = Math.round(weather.current.feelslike_c);
+                      const wind = Math.round(weather.current.wind_kph);
+                      const humidity = weather.current.humidity;
+                      const condition = weather.current.condition.text;
+                      return `${condition} con temperatura de ${temp}°C, sensación térmica ${feels}°C, viento ${wind} km/h, humedad ${humidity}%, visibilidad ${weather.current.vis_km} km.`;
+                    })()
+                }
               </div>
             )}
 
@@ -427,14 +542,17 @@ function App() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="search-container-below"
             >
-              <form onSubmit={handleSubmit} className="search-modern-below">
+              <form onSubmit={handleSubmit} className="search-modern-below" style={{ position: 'relative' }}>
                 <input
                   type="text"
                   value={city}
-                  onChange={(e) => setCity(e.target.value)}
+                  onChange={handleCityInput}
                   placeholder={t.searchPlaceholder}
                   className="search-input-modern-below"
                   disabled={loading}
+                  autoComplete="off"
+                  onFocus={() => cityOptions.length > 0 && setShowCityDropdown(true)}
+                  onBlur={() => setTimeout(() => setShowCityDropdown(false), 120)}
                 />
                 <button 
                   type="submit"
@@ -443,6 +561,17 @@ function App() {
                 >
                   <Search size={18} />
                 </button>
+                {showCityDropdown && cityOptions.length > 0 && (
+                  <ul className="city-dropdown-list">
+                    {cityOptions.map((city, idx) => (
+                      <li key={city.id || idx}>
+                        <button type="button" className="city-dropdown-option" onMouseDown={() => handleCitySelect(city)}>
+                          {city.name}{city.region ? `, ${city.region}` : ''}{city.country ? `, ${city.country}` : ''}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </form>
             </motion.div>
             
@@ -496,7 +625,30 @@ function App() {
                   
                   {/* Weather Description */}
                   <div className="weather-description-modern">
-                    <p className="condition-text-modern">{weather.current.condition.text}</p>
+                    <p className="condition-text-modern">
+                      {settings.language === 'en'
+                        ? (() => {
+                            let condition = weather.current.condition.text;
+                            const map = {
+                              'Lluvia moderada a intervalos': 'Moderate rain at times',
+                              'Lluvia ligera': 'Light rain',
+                              'Lluvia moderada': 'Moderate rain',
+                              'Nublado': 'Cloudy',
+                              'Cielo cubierto': 'Overcast',
+                              'Despejado': 'Clear',
+                              'Soleado': 'Sunny',
+                              'Parcialmente nublado': 'Partly cloudy',
+                              'Niebla': 'Fog',
+                              'Nieve': 'Snow',
+                              'Tormenta': 'Thunderstorm',
+                              // Agrega más según sea necesario
+                            };
+                            if (map[condition]) condition = map[condition];
+                            return condition;
+                          })()
+                        : weather.current.condition.text
+                      }
+                    </p>
                     <p className="feels-like-modern">
                       {t.feelsLike} {formatTemperature(weather.current.feelslike_c)}
                     </p>

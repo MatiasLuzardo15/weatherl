@@ -364,14 +364,14 @@ function App() {
               }}>
                 <h1 style={{
                   margin: 0,
-                  paddingBottom: '18px',
+                  paddingBottom: '6px',
                   fontFamily: "'Yatra One', 'Permanent Marker', 'Syne', 'Segoe UI', 'Fira Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Arial, sans-serif",
                   fontWeight: 700,
                   fontStyle: 'normal',
                   fontSize: '2.6rem',
                   color: 'white',
                   letterSpacing: '0.01em',
-                  textShadow: '0 4px 18px rgba(0,0,0,0.32), 0 1.5px 0px rgba(0,0,0,0.18)',
+                  textShadow: 'none',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.7rem',

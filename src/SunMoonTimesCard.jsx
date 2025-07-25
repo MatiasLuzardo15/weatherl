@@ -85,11 +85,11 @@ const SunMoonTimesCard = ({ astro, t, language = 'es' }) => {
           <div style={{ display: 'flex', gap: '1.2rem', marginTop: 4 }}>
             <div>
               <div style={{ fontSize: 13, color: '#fff8' }}>{t.moonrise || 'Salida'}</div>
-              <div style={{ fontSize: 17, fontWeight: 500 }}>{astro.moonset || '-'}</div>
+              <div style={{ fontSize: 17, fontWeight: 500 }}>{astro.moonrise || '-'}</div>
             </div>
             <div>
               <div style={{ fontSize: 13, color: '#fff8' }}>{t.moonset || 'Puesta'}</div>
-              <div style={{ fontSize: 17, fontWeight: 500 }}>{astro.moonrise || '-'}</div>
+              <div style={{ fontSize: 17, fontWeight: 500 }}>{astro.moonset || '-'}</div>
             </div>
           </div>
           <div style={{ marginTop: 8, fontSize: 14, color: '#fff' }}>

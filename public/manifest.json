@@ -1,0 +1,17 @@
+{
+  "name": "WeatherL",
+  "short_name": "WeatherL",
+  "description": "Beautiful weather app with Apple-style animations",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e293b",
+  "theme_color": "#cb6ce6",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

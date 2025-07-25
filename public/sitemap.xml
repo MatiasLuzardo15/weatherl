@@ -6,7 +6,7 @@
   
   <!-- Página principal -->
   <url>
-    <loc>https://weatherl.vercel.app/</loc>
+    <loc>https://weatherl.space/</loc>
     <lastmod>2025-01-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -14,21 +14,21 @@
   
   <!-- Funcionalidades principales -->
   <url>
-    <loc>https://weatherl.vercel.app/?location=madrid</loc>
+    <loc>https://weatherl.space/?location=madrid</loc>
     <lastmod>2025-01-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://weatherl.vercel.app/?location=barcelona</loc>
+    <loc>https://weatherl.space/?location=barcelona</loc>
     <lastmod>2025-01-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://weatherl.vercel.app/?location=valencia</loc>
+    <loc>https://weatherl.space/?location=valencia</loc>
     <lastmod>2025-01-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>

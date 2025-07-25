@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://weatherl.vercel.app/sitemap.xml
+Sitemap: https://weatherl.space/sitemap.xml
 
 # Optimización para crawlers
 Crawl-delay: 1

@@ -13,10 +13,13 @@ import {
 } from 'lucide-react';
 import { LANGUAGES } from './languages';
 import WeeklyDayDetail from './WeeklyDayDetail';
+import SunMoonTimesCard from './SunMoonTimesCard';
 import LunarPhaseCard from './LunarPhaseCard';
+import LunarPhaseDetail from './LunarPhaseDetail';
 
-const WeeklyForecast = ({ forecast, temperatureUnit = 'celsius', language = 'es' }) => {
+const WeeklyForecast = ({ forecast, temperatureUnit = 'celsius', language = 'es', location }) => {
   const [selectedDay, setSelectedDay] = useState(null);
+  const [selectedLunarPhase, setSelectedLunarPhase] = useState(null);
 
   if (!forecast) return null;
 
@@ -144,9 +147,9 @@ const WeeklyForecast = ({ forecast, temperatureUnit = 'celsius', language = 'es'
       </div>
 
       {/* Weekly Statistics */}
+
       <div className="weekly-forecast-modern">
         <h3 className="weekly-title-modern">{t.weeklyAverages}</h3>
-        
         <div className="weekly-stats-grid">
           <div className="weekly-stat-card">
             <Droplets size={14} className="weekly-stat-icon" />
@@ -168,14 +171,26 @@ const WeeklyForecast = ({ forecast, temperatureUnit = 'celsius', language = 'es'
             <div className="weekly-stat-label">UV Index</div>
             <div className="weekly-stat-value">{weeklyAvg.uv}</div>
           </div>
-          {/* Tarjeta de fase lunar */}
-          <LunarPhaseCard astro={forecast.forecast.forecastday[0].astro} t={t} language={language} />
         </div>
       </div>
 
+      {/* Tarjeta sol y luna separada */}
+      <div style={{ margin: '2.5rem auto 0 auto', maxWidth: 480 }}>
+        <SunMoonTimesCard astro={forecast.forecast.forecastday[0].astro} t={t} language={language} />
+      </div>
+
       <WeeklyDayDetail day={selectedDay} onClose={() => setSelectedDay(null)} />
+      <LunarPhaseDetail astro={selectedLunarPhase} t={t} language={language} onClose={() => setSelectedLunarPhase(null)} />
     </div>
   );
 };
 
-export default WeeklyForecast;
+export default function WeeklyForecastWithLunar(props) {
+  return <>
+    <WeeklyForecast {...props} />
+    {/* Tarjeta de fase lunar separada */}
+    <div style={{ margin: '2.5rem auto 0 auto', maxWidth: 480 }}>
+      <LunarPhaseCard astro={props.forecast?.forecast?.forecastday?.[0]?.astro} t={props.t} language={props.language} location={props.location} />
+    </div>
+  </>;
+}

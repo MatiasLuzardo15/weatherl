@@ -29,7 +29,7 @@ import { LANGUAGES, getGreeting, getLocalizedDate } from './languages'
 import SettingsPanel from './SettingsPanel'
 import ModernSettingsPanel from './ModernSettingsPanel'
 import WeatherMap from './WeatherMap'
-import WeeklyForecast from './WeeklyForecast'
+import WeeklyForecast, { default as WeeklyForecastWithLunar } from './WeeklyForecast'
 import './App.css'
 
 const weatherIcons = {
@@ -825,10 +825,11 @@ function App() {
               </>
             ) : (
               // Week's Content
-              <WeeklyForecast 
+              <WeeklyForecastWithLunar 
                 forecast={forecast} 
                 temperatureUnit={settings.temperatureUnit}
                 language={settings.language}
+                location={city || settings.location || ''}
               />
             )}
           </div>          {/* Map Column */}

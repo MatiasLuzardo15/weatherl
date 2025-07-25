@@ -56,14 +56,14 @@ const SunMoonTimesCard = ({ astro, t, language = 'es' }) => {
       }}>
         <Sun size={32} style={{ color: '#ffe066', opacity: 0.7 }} />
         <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: 600, fontSize: '1.08rem', color: '#ffe066', opacity: 0.8 }}>{t.sun || 'Sol'}</div>
+          <div style={{ fontWeight: 600, fontSize: '1.08rem', color: '#ffe066', opacity: 0.8 }}>{t.sun || (language === 'en' ? 'Sun' : 'Sol')}</div>
           <div style={{ display: 'flex', gap: '1.2rem', marginTop: 4 }}>
             <div>
-              <div style={{ fontSize: 13, color: '#fff8' }}>{t.sunrise || 'Salida'}</div>
+              <div style={{ fontSize: 13, color: '#fff8' }}>{t.sunrise || (language === 'en' ? 'Sunrise' : 'Salida')}</div>
               <div style={{ fontSize: 17, fontWeight: 500 }}>{astro.sunrise || '-'}</div>
             </div>
             <div>
-              <div style={{ fontSize: 13, color: '#fff8' }}>{t.sunset || 'Puesta'}</div>
+              <div style={{ fontSize: 13, color: '#fff8' }}>{t.sunset || (language === 'en' ? 'Sunset' : 'Puesta')}</div>
               <div style={{ fontSize: 17, fontWeight: 500 }}>{astro.sunset || '-'}</div>
             </div>
           </div>
@@ -81,20 +81,20 @@ const SunMoonTimesCard = ({ astro, t, language = 'es' }) => {
       }}>
         <Moon size={32} style={{ color: '#7db7ff', opacity: 0.7 }} />
         <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: 600, fontSize: '1.08rem', color: '#7db7ff', opacity: 0.8 }}>{t.moon || 'Luna'}</div>
+          <div style={{ fontWeight: 600, fontSize: '1.08rem', color: '#7db7ff', opacity: 0.8 }}>{t.moon || (language === 'en' ? 'Moon' : 'Luna')}</div>
           <div style={{ display: 'flex', gap: '1.2rem', marginTop: 4 }}>
             <div>
-              <div style={{ fontSize: 13, color: '#fff8' }}>{t.moonrise || 'Salida'}</div>
+              <div style={{ fontSize: 13, color: '#fff8' }}>{t.moonrise || (language === 'en' ? 'Moonrise' : 'Salida')}</div>
               <div style={{ fontSize: 17, fontWeight: 500 }}>{astro.moonrise || '-'}</div>
             </div>
             <div>
-              <div style={{ fontSize: 13, color: '#fff8' }}>{t.moonset || 'Puesta'}</div>
+              <div style={{ fontSize: 13, color: '#fff8' }}>{t.moonset || (language === 'en' ? 'Moonset' : 'Puesta')}</div>
               <div style={{ fontSize: 17, fontWeight: 500 }}>{astro.moonset || '-'}</div>
             </div>
           </div>
           <div style={{ marginTop: 8, fontSize: 14, color: '#fff' }}>
-            <span style={{ fontWeight: 500 }}>{t.lunarPhase || 'Fase lunar'}:</span> {phaseName}
-            <span style={{ marginLeft: 10, color: '#ffe7a0' }}>{t.lunarIllumination || 'Iluminación'}: {astro.moon_illumination}%</span>
+            <span style={{ fontWeight: 500 }}>{t.lunarPhase || (language === 'en' ? 'Lunar phase' : 'Fase lunar')}:</span> {phaseName}
+            <span style={{ marginLeft: 10, color: '#ffe7a0' }}>{t.lunarIllumination || (language === 'en' ? 'Illumination' : 'Iluminación')}: {astro.moon_illumination}%</span>
           </div>
         </div>
       </div>

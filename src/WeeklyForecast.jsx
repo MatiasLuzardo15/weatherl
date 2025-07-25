@@ -176,7 +176,11 @@ const WeeklyForecast = ({ forecast, temperatureUnit = 'celsius', language = 'es'
 
       {/* Tarjeta sol y luna separada con animación de resplandor */}
       <div style={{ margin: '2.5rem auto 0 auto', maxWidth: 480 }}>
-        <SunMoonTimesCard astro={forecast.forecast.forecastday[0].astro} t={t} language={language} />
+        <SunMoonTimesCard 
+          astro={forecast.forecast.forecastday[0].astro} 
+          t={LANGUAGES[language] || LANGUAGES['es']} 
+          language={language} 
+        />
       </div>
 
       <WeeklyDayDetail day={selectedDay} onClose={() => setSelectedDay(null)} />

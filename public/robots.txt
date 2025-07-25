@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://weatherl.vercel.app/sitemap.xml
+
+# Optimización para crawlers
+Crawl-delay: 1
+
+# Archivos específicos
+Allow: /favicon.svg
+Allow: /manifest.json
+Allow: /assets/
+
+# Mejorar indexación
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0

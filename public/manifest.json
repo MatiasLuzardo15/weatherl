@@ -1,17 +1,39 @@
 {
-  "name": "WeatherL",
+  "name": "WeatherL - Aplicación del Clima",
   "short_name": "WeatherL",
-  "description": "Beautiful weather app with Apple-style animations",
+  "description": "Elegante aplicación del clima con animaciones estilo Apple. Pronóstico del tiempo, mapas interactivos y clima de 7 días.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#1e293b",
   "theme_color": "#cb6ce6",
+  "categories": ["weather", "utilities", "lifestyle"],
+  "lang": "es",
+  "dir": "ltr",
   "icons": [
     {
       "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Clima actual",
+      "short_name": "Clima",
+      "description": "Ver el clima actual",
+      "url": "/",
+      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
     }
   ]
 }

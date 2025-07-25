@@ -2,13 +2,83 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    
+    <!-- Favicon y iconos -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
     <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Meta tags básicos -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="WeatherL - Beautiful weather app with Apple-style animations" />
     <meta name="theme-color" content="#cb6ce6" />
-    <title>WeatherL - Weather App</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>WeatherL - Aplicación del Clima con Animaciones Apple | Pronóstico del Tiempo</title>
+    <meta name="description" content="WeatherL es una elegante aplicación del clima con animaciones estilo Apple. Consulta el pronóstico del tiempo, mapas interactivos y clima de 7 días. Gratis y sin publicidad." />
+    <meta name="keywords" content="clima, tiempo, pronóstico, meteorología, weather, lluvia, sol, temperatura, mapa del tiempo, aplicación clima, weather app, pronóstico 7 días" />
+    <meta name="author" content="Matias Luzardo" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph (Facebook, LinkedIn) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="WeatherL - Aplicación del Clima con Animaciones Apple" />
+    <meta property="og:description" content="Elegante aplicación del clima con animaciones estilo Apple. Consulta el pronóstico del tiempo y mapas interactivos." />
+    <meta property="og:image" content="/favicon.svg" />
+    <meta property="og:url" content="https://weatherl.vercel.app" />
+    <meta property="og:site_name" content="WeatherL" />
+    <meta property="og:locale" content="es_ES" />
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="WeatherL - Aplicación del Clima con Animaciones Apple" />
+    <meta name="twitter:description" content="Elegante aplicación del clima con animaciones estilo Apple. Consulta el pronóstico del tiempo y mapas interactivos." />
+    <meta name="twitter:image" content="/favicon.svg" />
+    <meta name="twitter:creator" content="@MatiasLuzardo" />
+    
+    <!-- SEO adicional -->
+    <meta name="application-name" content="WeatherL" />
+    <meta name="apple-mobile-web-app-title" content="WeatherL" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://weatherl.vercel.app" />
+    
+    <!-- Preconnect para mejor rendimiento -->
+    <link rel="preconnect" href="https://api.weatherapi.com" />
+    <link rel="dns-prefetch" href="https://api.weatherapi.com" />
+    
+    <!-- Schema.org estructurado -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "WeatherL",
+      "description": "Elegante aplicación del clima con animaciones estilo Apple",
+      "url": "https://weatherl.vercel.app",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Matias Luzardo"
+      },
+      "screenshot": "/favicon.svg",
+      "featureList": [
+        "Pronóstico del tiempo de 7 días",
+        "Mapas interactivos del clima",
+        "Animaciones estilo Apple",
+        "Interfaz responsive",
+        "Múltiples idiomas",
+        "Geolocalización automática"
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

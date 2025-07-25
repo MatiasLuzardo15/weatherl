@@ -1,0 +1,55 @@
+{
+  "name": "weatherl",
+  "version": "2.0.0",
+  "description": "Una aplicación del clima hermosa y moderna con animaciones estilo Apple",
+  "author": "Matias Luzardo <tu@email.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuusuario/weatherl.git"
+  },
+  "homepage": "https://github.com/tuusuario/weatherl#readme",
+  "bugs": {
+    "url": "https://github.com/tuusuario/weatherl/issues"
+  },
+  "keywords": [
+    "weather",
+    "climate",
+    "react",
+    "vite",
+    "framer-motion",
+    "responsive",
+    "glassmorphism",
+    "weather-app",
+    "forecast",
+    "modern-ui"
+  ],
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "start": "vite preview",
+    "clean": "rm -rf dist node_modules"
+  },
+  "dependencies": {
+    "framer-motion": "^12.23.9",
+    "lucide-react": "^0.525.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.30.1",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.6.0",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.30.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "vite": "^7.0.4"
+  }
+}

@@ -1,0 +1,641 @@
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import React from 'react'
+import { 
+  Cloud, 
+  CloudRain, 
+  Sun, 
+  CloudSnow, 
+  CloudDrizzle,
+  CloudLightning,
+  Search,
+  MapPin,
+  Thermometer,
+  Eye,
+  Wind,
+  Droplets,
+  Loader2,
+  Settings,
+  Quote,
+  RefreshCw,
+  X,
+  Sunrise,
+  Moon
+} from 'lucide-react'
+import { WEATHER_API_CONFIG } from './config'
+import { getWeatherPhrase, loadSettings, saveSettings, DEFAULT_SETTINGS } from './weatherPhrases'
+import { LANGUAGES, getGreeting, getLocalizedDate } from './languages'
+import SettingsPanel from './SettingsPanel'
+import ModernSettingsPanel from './ModernSettingsPanel'
+import WeatherMap from './WeatherMap'
+import WeeklyForecast from './WeeklyForecast'
+import './App.css'
+
+const weatherIcons = {
+  '01d': Sun,
+  '01n': Sun,
+  '02d': Cloud,
+  '02n': Cloud,
+  '03d': Cloud,
+  '03n': Cloud,
+  '04d': Cloud,
+  '04n': Cloud,
+  '09d': CloudRain,
+  '09n': CloudRain,
+  '10d': CloudDrizzle,
+  '10n': CloudDrizzle,
+  '11d': CloudLightning,
+  '11n': CloudLightning,
+  '13d': CloudSnow,
+  '13n': CloudSnow,
+  '50d': Cloud,
+  '50n': Cloud,
+}
+
+function App() {
+  const [weather, setWeather] = useState(null)
+  const [forecast, setForecast] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [city, setCity] = useState('')
+  const [refreshTime, setRefreshTime] = useState(null)
+  const [settings, setSettings] = useState(DEFAULT_SETTINGS)
+  const [showSettings, setShowSettings] = useState(false)
+  const [currentPhrase, setCurrentPhrase] = useState('')
+  const [activeTab, setActiveTab] = useState('today')
+
+  useEffect(() => {
+    const savedSettings = loadSettings()
+    setSettings(savedSettings)
+    
+    if (savedSettings.autoLocation) {
+      getCurrentLocationWeather()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (weather && settings.showPhrase) {
+      const phrase = getWeatherPhrase(weather.current.condition.text, weather.current.is_day)
+      setCurrentPhrase(phrase)
+    }
+  }, [weather, settings.showPhrase])
+
+  const updateSettings = (newSettings) => {
+    setSettings(newSettings)
+    saveSettings(newSettings)
+  }
+
+  const getCurrentLocationWeather = () => {
+    if (navigator.geolocation) {
+      setLoading(true)
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords
+          fetchWeatherByCoords(latitude, longitude)
+        },
+        (error) => {
+          setError(t.locationError)
+          setLoading(false)
+        }
+      )
+    } else {
+      setError(t.locationError)
+    }
+  }
+
+  const fetchWeatherByCoords = async (lat, lon) => {
+    try {
+      const response = await fetch(
+        `${WEATHER_API_CONFIG.BASE_URL}/current.json?key=${WEATHER_API_CONFIG.API_KEY}&q=${lat},${lon}&aqi=yes&lang=es`
+      )
+      const data = await response.json()
+      if (response.ok) {
+        setWeather(data)
+        setError('')
+        setRefreshTime(new Date())
+        // Fetch forecast for the same location
+        fetchForecast(`${lat},${lon}`)
+      } else {
+        setError(t.connectionError)
+      }
+    } catch (err) {
+      setError(t.connectionError)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const fetchForecast = async (location) => {
+    try {
+      const response = await fetch(
+        `${WEATHER_API_CONFIG.BASE_URL}/forecast.json?key=${WEATHER_API_CONFIG.API_KEY}&q=${location}&days=7&aqi=no&alerts=no&lang=es`
+      )
+      const data = await response.json()
+      if (response.ok) {
+        setForecast(data)
+      }
+    } catch (err) {
+      console.error('Error fetching forecast:', err)
+    }
+  }
+
+  const fetchWeather = async (cityName) => {
+    if (!cityName.trim()) return
+    
+    setLoading(true)
+    setError('')
+    
+    try {
+      const response = await fetch(
+        `${WEATHER_API_CONFIG.BASE_URL}/current.json?key=${WEATHER_API_CONFIG.API_KEY}&q=${encodeURIComponent(cityName)}&aqi=yes&lang=es`
+      )
+      
+      const data = await response.json()
+      
+      if (response.ok) {
+        setWeather(data)
+        setCity('')
+        setRefreshTime(new Date())
+        // Fetch forecast for the same city
+        fetchForecast(cityName)
+      } else {
+        setError(data.error?.message || t.cityNotFound)
+      }
+    } catch (err) {
+      setError(t.connectionError)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    fetchWeather(city)
+  }
+
+  const refreshWeather = () => {
+    if (weather) {
+      fetchWeather(weather.location.name)
+    }
+  }
+
+  const formatTemperature = (temp) => {
+    if (settings.temperatureUnit === 'fahrenheit') {
+      return `${Math.round((temp * 9/5) + 32)}°F`
+    }
+    return `${Math.round(temp)}°C`
+  }
+
+  const formatTime = (date) => {
+    return date.toLocaleTimeString(settings.timeFormat === '24h' ? 'es-ES' : 'en-US', {
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  }
+
+  // Get current language texts
+  const t = LANGUAGES[settings.language] || LANGUAGES['es']
+
+  // Get greeting info
+  const getGreetingInfo = () => {
+    const hour = new Date().getHours()
+    let icon, timeClass
+    
+    if (hour >= 5 && hour < 12) {
+      icon = '🌅'
+      timeClass = 'morning'
+    } else if (hour >= 12 && hour < 18) {
+      icon = '☀️'
+      timeClass = 'afternoon'
+    } else {
+      icon = '🌙'
+      timeClass = 'evening'
+    }
+    
+    return { 
+      greeting: getGreeting(settings.language), 
+      icon, 
+      timeClass 
+    }
+  }
+
+
+
+
+
+
+
+
+
+  const getBackgroundClass = () => {
+    if (!weather) return 'bg-gradient-blue'
+    
+    const time = new Date().getHours()
+    const isDay = time >= 6 && time < 18
+    const weatherCondition = weather.current.condition.text.toLowerCase()
+    
+    if (weatherCondition.includes('lluvia') || weatherCondition.includes('rain')) {
+      return isDay ? 'bg-gradient-day-rain' : 'bg-gradient-night-rain'
+    } else if (weatherCondition.includes('nube') || weatherCondition.includes('cloud') || weatherCondition.includes('nublado')) {
+      return isDay ? 'bg-gradient-day-clouds' : 'bg-gradient-night-clouds'
+    } else if (weatherCondition.includes('despejado') || weatherCondition.includes('soleado') || weatherCondition.includes('clear') || weatherCondition.includes('sunny')) {
+      return isDay ? 'bg-gradient-day-clear' : 'bg-gradient-night-clear'
+    } else if (weatherCondition.includes('nieve') || weatherCondition.includes('snow')) {
+      return isDay ? 'bg-gradient-day-snow' : 'bg-gradient-night-snow'
+    }
+    
+    return 'bg-gradient-blue'
+  }
+
+  // Get weather icon
+  const getWeatherIcon = () => {
+    if (!weather) return Cloud
+    
+    const condition = weather.current.condition.text.toLowerCase()
+    const isDay = weather.current.is_day === 1
+    
+    if (condition.includes('lluvia') || condition.includes('rain')) {
+      return CloudRain
+    } else if (condition.includes('nieve') || condition.includes('snow')) {
+      return CloudSnow
+    } else if (condition.includes('tormenta') || condition.includes('thunder')) {
+      return CloudLightning
+    } else if (condition.includes('llovizna') || condition.includes('drizzle')) {
+      return CloudDrizzle
+    } else if (condition.includes('nube') || condition.includes('cloud') || condition.includes('nublado')) {
+      return Cloud
+    } else if (condition.includes('despejado') || condition.includes('soleado') || condition.includes('clear') || condition.includes('sunny')) {
+      return Sun
+    }
+    
+    return Cloud
+  }
+
+  // Get dynamic theme based on weather
+  const getWeatherTheme = () => {
+    if (!weather) return 'theme-cloudy'
+    
+    const condition = weather.current.condition.text.toLowerCase()
+    const isDay = weather.current.is_day === 1
+    
+    // Night theme regardless of weather
+    if (!isDay) {
+      return 'theme-night'
+    }
+    
+    // Day themes based on conditions
+    if (condition.includes('lluvia') || condition.includes('rain') || condition.includes('drizzle') || condition.includes('llovizna')) {
+      return 'theme-rainy'
+    } else if (condition.includes('nieve') || condition.includes('snow')) {
+      return 'theme-snow'
+    } else if (condition.includes('tormenta') || condition.includes('thunder') || condition.includes('storm')) {
+      return 'theme-storm'
+    } else if (condition.includes('niebla') || condition.includes('fog') || condition.includes('mist') || condition.includes('haze')) {
+      return 'theme-fog'
+    } else if (condition.includes('despejado') || condition.includes('soleado') || condition.includes('clear') || condition.includes('sunny')) {
+      return 'theme-sunny'
+    } else if (condition.includes('nube') || condition.includes('cloud') || condition.includes('nublado') || condition.includes('overcast')) {
+      return 'theme-cloudy'
+    }
+    
+    // Default to cloudy
+    return 'theme-cloudy'
+  }
+
+  const WeatherIcon = getWeatherIcon()
+  const weatherTheme = getWeatherTheme()
+
+  return (
+    <div 
+      className={`min-h-screen weather-app-container ${weatherTheme}`}
+    >
+      <div className="container">
+        {/* Modern Header */}
+        <header className="modern-header">
+          <div className="header-left">
+            {/* Tab Switcher */}
+            <div className="tab-switcher-modern">
+              <button 
+                className={`tab-modern ${activeTab === 'today' ? 'active' : ''}`}
+                onClick={() => setActiveTab('today')}
+              >
+                {t.today}
+              </button>
+              <button 
+                className={`tab-modern ${activeTab === 'week' ? 'active' : ''}`}
+                onClick={() => setActiveTab('week')}
+              >
+                {t.week}
+              </button>
+            </div>
+          </div>
+          
+          <div className="header-center">
+            {/* Espacio central vacío para balance visual */}
+          </div>
+          
+          <div className="header-right">
+            {/* Settings Button */}
+            <button 
+              className="settings-btn-modern"
+              onClick={() => setShowSettings(true)}
+            >
+              <Settings size={20} />
+            </button>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="extended-grid-modern">
+          {/* Main Weather Card */}
+          <div>
+            {/* Greeting Card */}
+            {weather && (
+              <motion.div 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className={`greeting-card-modern ${getGreetingInfo().timeClass}`}
+              >
+                <span className="greeting-icon-modern">{getGreetingInfo().icon}</span>
+                <div className="greeting-text-modern">{getGreetingInfo().greeting}</div>
+              </motion.div>
+            )}
+
+            {/* Search Bar */}
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="search-container-below"
+            >
+              <form onSubmit={handleSubmit} className="search-modern-below">
+                <input
+                  type="text"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  placeholder={t.searchPlaceholder}
+                  className="search-input-modern-below"
+                  disabled={loading}
+                />
+                <button 
+                  type="submit"
+                  disabled={loading || !city.trim()}
+                  className="search-btn-modern-below"
+                >
+                  <Search size={18} />
+                </button>
+              </form>
+            </motion.div>
+            
+            <div className="weather-card-modern">
+              {loading ? (
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '100%',
+                  textAlign: 'center'
+                }}>
+                  <Loader2 className="w-12 h-12 text-white mb-4" style={{ animation: 'spin 1s linear infinite' }} />
+                  <p style={{ color: 'white', opacity: 0.7 }}>{t.loadingWeather}</p>
+                </div>
+              ) : error ? (
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '100%',
+                  textAlign: 'center'
+                }}>
+                  <p style={{ color: 'white', marginBottom: '1rem' }}>{error}</p>
+                  <button onClick={getCurrentLocationWeather} className="btn">
+                    <MapPin size={16} />
+                    {t.tryAgain}
+                  </button>
+                </div>
+              ) : weather ? (
+                <>
+                  {/* Weather Icon */}
+                  <div className="weather-icon-large-modern">
+                    <WeatherIcon size={80} className="weather-icon-main-modern" />
+                  </div>
+                  
+                  {/* Temperature */}
+                  <div className="temperature-main-modern">
+                    {Math.round(weather.current.temp_c)}
+                    <span className="temperature-unit-modern">°{settings.temperatureUnit === 'fahrenheit' ? 'F' : 'C'}</span>
+                  </div>
+                  
+                  {/* Date & Location */}
+                  <div className="date-location-modern">
+                    <p className="date-text-modern">
+                      {getLocalizedDate(new Date(), settings.language)}
+                    </p>
+                  </div>
+                  
+                  {/* Weather Description */}
+                  <div className="weather-description-modern">
+                    <p className="condition-text-modern">{weather.current.condition.text}</p>
+                    <p className="feels-like-modern">
+                      {t.feelsLike} {formatTemperature(weather.current.feelslike_c)}
+                    </p>
+                  </div>
+                  
+                  {/* Location Card */}
+                  <div className="location-card-modern">
+                    <MapPin size={16} style={{ color: 'white', opacity: 0.7 }} />
+                    <span className="location-text-modern">
+                      {weather.location.name}, {weather.location.country}
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '100%',
+                  textAlign: 'center'
+                }}>
+                  <p style={{ color: 'white', marginBottom: '1rem' }}>{t.welcomeMessage}</p>
+                  <button onClick={getCurrentLocationWeather} className="btn">
+                    <MapPin size={16} />
+                    {t.getLocationWeather}
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          {/* Forecast & Details */}
+          <div>
+            {activeTab === 'today' ? (
+              // Today's Content
+              <>
+                {weather && (
+                  <div className="highlights-modern">
+                    <h3 className="section-title-modern">{t.todayHighlights}</h3>
+                    <div className="highlights-grid-modern">
+                      {/* UV Index */}
+                      <div className="highlight-card-modern">
+                        <div className="highlight-header-modern">
+                          <Sun size={16} style={{ color: '#f59e0b' }} />
+                          <span className="highlight-label-modern">{t.uvIndex}</span>
+                        </div>
+                        <div className="highlight-value-modern">
+                          {weather.current.uv}
+                          <span className="unit-modern">UV</span>
+                        </div>
+                        <div className="uv-meter-modern">
+                          <div 
+                            className="uv-bar-modern" 
+                            style={{ width: `${(weather.current.uv / 12) * 100}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                      
+                      {/* Wind */}
+                      <div className="highlight-card-modern">
+                        <div className="highlight-header-modern">
+                          <Wind size={16} style={{ color: '#3b82f6' }} />
+                          <span className="highlight-label-modern">{t.wind}</span>
+                        </div>
+                        <div className="highlight-value-modern">
+                          {Math.round(weather.current.wind_kph)}
+                          <span className="unit-modern">km/h</span>
+                        </div>
+                        <div className="wind-direction-modern">
+                          <div className="wind-compass-modern">
+                            <div 
+                              className="wind-arrow-modern"
+                              style={{ transform: `rotate(${weather.current.wind_degree}deg)` }}
+                            >
+                              ↑
+                            </div>
+                          </div>
+                          <span className="wind-dir-modern">{weather.current.wind_dir}</span>
+                        </div>
+                      </div>
+                      
+                      {/* Humidity */}
+                      <div className="highlight-card-modern">
+                        <div className="highlight-header-modern">
+                          <Droplets size={16} style={{ color: '#06b6d4' }} />
+                          <span className="highlight-label-modern">{t.humidity}</span>
+                        </div>
+                        <div className="highlight-value-modern">
+                          {weather.current.humidity}
+                          <span className="unit-modern">%</span>
+                        </div>
+                        <div className="status-indicator-modern">
+                          {weather.current.humidity > 70 ? t.high : 
+                           weather.current.humidity > 40 ? t.normal : t.low}
+                        </div>
+                      </div>
+                      
+                      {/* Visibility */}
+                      <div className="highlight-card-modern">
+                        <div className="highlight-header-modern">
+                          <Eye size={16} style={{ color: '#6b7280' }} />
+                          <span className="highlight-label-modern">{t.visibility}</span>
+                        </div>
+                        <div className="highlight-value-modern">
+                          {weather.current.vis_km}
+                          <span className="unit-modern">km</span>
+                        </div>
+                        <div className="status-indicator-modern">
+                          {weather.current.vis_km > 10 ? t.excellent :
+                           weather.current.vis_km > 5 ? t.good : t.poor}
+                        </div>
+                      </div>
+                      
+                      {/* Pressure */}
+                      <div className="highlight-card-modern">
+                        <div className="highlight-header-modern">
+                          <Thermometer size={16} style={{ color: '#8b5cf6' }} />
+                          <span className="highlight-label-modern">{t.pressure}</span>
+                        </div>
+                        <div className="highlight-value-modern">
+                          {Math.round(weather.current.pressure_mb)}
+                          <span className="unit-modern">mb</span>
+                        </div>
+                      </div>
+                      
+                      {/* Feels Like */}
+                      <div className="highlight-card-modern">
+                        <div className="highlight-header-modern">
+                          <Thermometer size={16} style={{ color: '#ef4444' }} />
+                          <span className="highlight-label-modern">{t.feelsLike}</span>
+                        </div>
+                        <div className="highlight-value-modern">
+                          {Math.round(weather.current.feelslike_c)}
+                          <span className="unit-modern">°C</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Motivational Phrase */}
+                {settings.showPhrase && currentPhrase && weather && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.2))',
+                      backdropFilter: 'blur(30px)',
+                      border: '1px solid rgba(147, 51, 234, 0.3)',
+                      borderRadius: '20px',
+                      padding: '1.5rem',
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '1rem',
+                      boxShadow: 'var(--shadow-glass)',
+                      marginTop: '1.5rem'
+                    }}
+                  >
+                    <div>
+                      <Sun size={24} style={{ color: '#fbbf24' }} />
+                    </div>
+                    <p style={{
+                      color: 'white',
+                      fontSize: '1.1rem',
+                      fontStyle: 'italic',
+                      lineHeight: 1.5
+                    }}>
+                      "{currentPhrase}"
+                    </p>
+                  </motion.div>
+                )}
+              </>
+            ) : (
+              // Week's Content
+              <WeeklyForecast 
+                forecast={forecast} 
+                temperatureUnit={settings.temperatureUnit}
+                language={settings.language}
+              />
+            )}
+          </div>          {/* Map Column */}
+          <div>
+            <WeatherMap weather={weather} />
+          </div>
+        </main>
+      </div>
+      
+      <ModernSettingsPanel
+        isOpen={showSettings}
+        onClose={() => setShowSettings(false)}
+        settings={settings}
+        onSettingsChange={updateSettings}
+      />
+    </div>
+  )
+}
+
+export default App

@@ -20,7 +20,8 @@ import {
   RefreshCw,
   X,
   Sunrise,
-  Moon
+  Moon,
+  CalendarDays
 } from 'lucide-react'
 import { WEATHER_API_CONFIG } from './config'
 import { getWeatherPhrase, loadSettings, saveSettings, DEFAULT_SETTINGS } from './weatherPhrases'
@@ -314,20 +315,26 @@ function App() {
         <header className="modern-header">
           <div className="header-left">
             {/* Tab Switcher */}
-            <div className="tab-switcher-modern">
-              <button 
-                className={`tab-modern ${activeTab === 'today' ? 'active' : ''}`}
+            <nav className="tab-switcher-ios">
+              <button
+                className={`tab-ios ${activeTab === 'today' ? 'active' : ''}`}
                 onClick={() => setActiveTab('today')}
+                aria-label="Hoy"
+                title={t.today}
               >
-                {t.today}
+                <Sun size={22} />
+                <span className="tab-label">{t.today}</span>
               </button>
-              <button 
-                className={`tab-modern ${activeTab === 'week' ? 'active' : ''}`}
+              <button
+                className={`tab-ios ${activeTab === 'week' ? 'active' : ''}`}
                 onClick={() => setActiveTab('week')}
+                aria-label="Semana"
+                title={t.week}
               >
-                {t.week}
+                <CalendarDays size={22} />
+                <span className="tab-label">{t.week}</span>
               </button>
-            </div>
+            </nav>
           </div>
           
           <div className="header-center">
@@ -339,8 +346,10 @@ function App() {
             <button 
               className="settings-btn-modern"
               onClick={() => setShowSettings(true)}
+              aria-label="Ajustes"
+              title={t.settings}
             >
-              <Settings size={20} />
+              <Settings size={22} />
             </button>
           </div>
         </header>
@@ -362,24 +371,27 @@ function App() {
                 color: 'white',
                 textShadow: '0 2px 8px rgba(0,0,0,0.18)'
               }}>
-                <h1 style={{
-                  margin: 0,
-                  paddingBottom: '6px',
-                  fontFamily: "'Yatra One', 'Permanent Marker', 'Syne', 'Segoe UI', 'Fira Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Arial, sans-serif",
-                  fontWeight: 700,
-                  fontStyle: 'normal',
-                  fontSize: '2.6rem',
-                  color: 'white',
-                  letterSpacing: '0.01em',
-                  textShadow: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.7rem',
-                  justifyContent: 'flex-start',
-                  textAlign: 'left'
-                }}>
-                  {getGreetingInfo().greeting}
-                  <span style={{fontSize: '2.2rem', lineHeight: 1}}>{getGreetingInfo().icon}</span>
+                <h1
+                  className={`greeting-gradient ${getGreetingInfo().timeClass}`}
+                  style={{
+                    margin: 0,
+                    paddingBottom: '2px',
+                    fontFamily: "'Bitcount Grid Single', 'Yatra One', 'Permanent Marker', 'Syne', 'Segoe UI', 'Fira Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Arial, sans-serif",
+                    fontWeight: 'normal',
+                    fontStyle: 'normal',
+                    fontSize: '3.1rem',
+                    color: 'white',
+                    letterSpacing: '0.01em',
+                    textShadow: 'none',
+                    display: 'inline-block',
+                    textAlign: 'center',
+                  }}
+                >
+                  {(() => {
+                    const g = getGreetingInfo().greeting;
+                    if (g === 'Buenas Noches') return 'Buenas noches';
+                    return g;
+                  })()}
                 </h1>
               </div>
             )}
@@ -389,7 +401,7 @@ function App() {
               <div style={{
                 margin: '0 0 32px 0',
                 padding: 0,
-                textAlign: 'left',
+                textAlign: 'center',
                 color: 'rgba(255,255,255,0.92)',
                 fontFamily: "'Manrope', 'Fira Sans', 'Montserrat', 'Segoe UI', sans-serif",
                 fontSize: '1.08rem',

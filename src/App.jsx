@@ -349,17 +349,63 @@ function App() {
         <main className="extended-grid-modern">
           {/* Main Weather Card */}
           <div>
-            {/* Greeting Card */}
+            {/* Saludo como h1 Apple bold alineado a la izquierda */}
             {weather && (
-              <motion.div 
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className={`greeting-card-modern ${getGreetingInfo().timeClass}`}
-              >
-                <span className="greeting-icon-modern">{getGreetingInfo().icon}</span>
-                <div className="greeting-text-modern">{getGreetingInfo().greeting}</div>
-              </motion.div>
+              <div style={{
+                margin: '40px 0 10px 0',
+                padding: 0,
+                textAlign: 'left',
+                fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'San Francisco', 'Helvetica Neue', Arial, sans-serif",
+                fontWeight: 800,
+                fontSize: '2.3rem',
+                letterSpacing: '0.01em',
+                color: 'white',
+                textShadow: '0 2px 8px rgba(0,0,0,0.18)'
+              }}>
+                <h1 style={{
+                  margin: 0,
+                  paddingBottom: '18px',
+                  fontFamily: "'Yatra One', 'Permanent Marker', 'Syne', 'Segoe UI', 'Fira Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Arial, sans-serif",
+                  fontWeight: 700,
+                  fontStyle: 'normal',
+                  fontSize: '2.6rem',
+                  color: 'white',
+                  letterSpacing: '0.01em',
+                  textShadow: '0 4px 18px rgba(0,0,0,0.32), 0 1.5px 0px rgba(0,0,0,0.18)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.7rem',
+                  justifyContent: 'flex-start',
+                  textAlign: 'left'
+                }}>
+                  {getGreetingInfo().greeting}
+                  <span style={{fontSize: '2.2rem', lineHeight: 1}}>{getGreetingInfo().icon}</span>
+                </h1>
+              </div>
+            )}
+
+            {/* Resumen técnico del día, texto corrido aesthetic alineado a la izquierda */}
+            {weather && (
+              <div style={{
+                margin: '0 0 32px 0',
+                padding: 0,
+                textAlign: 'left',
+                color: 'rgba(255,255,255,0.92)',
+                fontFamily: "'Manrope', 'Fira Sans', 'Montserrat', 'Segoe UI', sans-serif",
+                fontSize: '1.08rem',
+                fontWeight: 400,
+                lineHeight: '1.7',
+                textShadow: '0 1px 3px rgba(0,0,0,0.13)'
+              }}>
+                {(() => {
+                  const temp = Math.round(weather.current.temp_c);
+                  const feels = Math.round(weather.current.feelslike_c);
+                  const wind = Math.round(weather.current.wind_kph);
+                  const humidity = weather.current.humidity;
+                  const condition = weather.current.condition.text;
+                  return `${condition} con temperatura de ${temp}°C, sensación térmica ${feels}°C, viento ${wind} km/h, humedad ${humidity}%, visibilidad ${weather.current.vis_km} km.`;
+                })()}
+              </div>
             )}
 
             {/* Search Bar */}

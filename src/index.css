@@ -135,7 +135,8 @@ body {
 
 /* Clases utilitarias */
 .container {
-  max-width: 1200px;
+  width: 100%;
+  min-width: 0;
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -1721,7 +1722,12 @@ body {
 
 /* Theme transition */
 .weather-app-container {
+  min-width: 100vw;
+  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
   transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-x: hidden;
 }
 
 /* ===== GREETING CARD STYLES ===== */

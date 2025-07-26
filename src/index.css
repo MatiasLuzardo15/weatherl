@@ -1,3 +1,18 @@
+/* Mostrar icono de menú (3 rayitas) solo en móvil, y engranaje solo en escritorio */
+.settings-icon-mobile {
+  display: none;
+}
+.settings-icon-desktop {
+  display: inline;
+}
+@media (max-width: 640px) {
+  .settings-icon-mobile {
+    display: block !important;
+  }
+  .settings-icon-desktop {
+    display: none !important;
+  }
+}
 /* Animación de resplandor para la tarjeta de Sol y Luna */
 .sun-moon-glow {
   position: relative;

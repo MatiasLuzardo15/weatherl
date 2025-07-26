@@ -16,6 +16,7 @@ import {
   Droplets,
   Loader2,
   Settings,
+  Menu,
   Quote,
   RefreshCw,
   X,
@@ -436,7 +437,8 @@ function App() {
               aria-label="Ajustes"
               title={t.settings}
             >
-              <Settings size={22} />
+              <span className="settings-icon-desktop"><Settings size={22} /></span>
+              <span className="settings-icon-mobile"><Menu size={26} /></span>
             </button>
           </div>
         </header>

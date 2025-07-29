@@ -1,3 +1,15 @@
+/* Solución global para overflow horizontal en móvil y zoom */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Si tienes un contenedor principal, también puedes agregar: */
+.app-main-container {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
 /* Mostrar icono de menú (3 rayitas) solo en móvil, y engranaje solo en escritorio */
 .settings-icon-mobile {
   display: none;

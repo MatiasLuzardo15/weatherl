@@ -1,4 +1,5 @@
 import React from 'react';
+// Solución de overflow horizontal en móvil: estilos en línea y clase extra
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, 
@@ -47,8 +48,15 @@ const ModernSettingsPanel = ({ isOpen, onClose, settings, onSettingsChange }) =>
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'tween', duration: 0.3 }}
+            style={{
+              maxWidth: '100vw',
+              width: '100vw',
+              overflowX: 'hidden',
+              boxSizing: 'border-box',
+              WebkitOverflowScrolling: 'touch'
+            }}
           >
-            <div className="settings-content-modern">
+            <div className="settings-content-modern" style={{ maxWidth: '100vw', overflowX: 'hidden' }}>
               {/* Header */}
               <div className="settings-header-modern">
                 <h2 className="settings-title-modern">Settings</h2>

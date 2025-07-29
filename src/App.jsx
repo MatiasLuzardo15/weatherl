@@ -485,7 +485,7 @@ function App() {
             {/* Saludo como h1 Apple bold alineado a la izquierda */}
             {weather && (
               <div style={{
-                margin: '18px 0 6px 0',
+                margin: '2px 0 6px 0',
                 padding: 0,
                 textAlign: 'left',
                 fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'San Francisco', 'Helvetica Neue', Arial, sans-serif",

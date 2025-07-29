@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { LANGUAGES } from './languages';
 // El logo WeatherL no existe en src/img, pero sí hay favicon.svg en public. Usaremos ese para evitar errores.
-import WeatherLLogo from '../public/favicon.svg';
+import WeatherLLogo from './weatherl.svg';
 
 const ModernSettingsPanel = ({ isOpen, onClose, settings, onSettingsChange }) => {
   // Get current language texts
@@ -250,7 +250,11 @@ const ModernSettingsPanel = ({ isOpen, onClose, settings, onSettingsChange }) =>
                       style={{ 
                         height: '32px',
                         width: 'auto',
-                        filter: 'brightness(0) invert(1)'
+                        background: 'rgba(255,255,255,0.12)',
+                        borderRadius: '8px',
+                        border: '1px solid rgba(255,255,255,0.18)',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.10)',
+                        marginBottom: '0.5rem'
                       }} 
                     />
                   </div>

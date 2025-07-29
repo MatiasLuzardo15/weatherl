@@ -26,6 +26,11 @@ import {
 } from 'lucide-react'
 import { WEATHER_API_CONFIG } from './config'
 import { getWeatherPhrase, loadSettings, saveSettings, DEFAULT_SETTINGS } from './weatherPhrases'
+// Extiende los ajustes por defecto
+const EXTENDED_DEFAULT_SETTINGS = {
+  ...DEFAULT_SETTINGS,
+  useLocalTimeGreeting: true,
+};
 import { LANGUAGES, getGreeting, getLocalizedDate } from './languages'
 import SettingsPanel from './SettingsPanel'
 import ModernSettingsPanel from './ModernSettingsPanel'
@@ -62,7 +67,7 @@ function App() {
   const [error, setError] = useState('')
   const [city, setCity] = useState('')
   const [refreshTime, setRefreshTime] = useState(null)
-  const [settings, setSettings] = useState(DEFAULT_SETTINGS)
+  const [settings, setSettings] = useState(EXTENDED_DEFAULT_SETTINGS)
   const [showSettings, setShowSettings] = useState(false)
   const [currentPhrase, setCurrentPhrase] = useState('')
   const [activeTab, setActiveTab] = useState('today')
@@ -71,8 +76,7 @@ function App() {
 
   useEffect(() => {
     const savedSettings = loadSettings()
-    setSettings(savedSettings)
-    
+    setSettings({ ...EXTENDED_DEFAULT_SETTINGS, ...savedSettings })
     if (savedSettings.autoLocation) {
       getCurrentLocationWeather()
     }
@@ -201,26 +205,56 @@ function App() {
   // Get current language texts
   const t = LANGUAGES[settings.language] || LANGUAGES['es']
 
-  // Get greeting info
+  // Get greeting info según preferencia del usuario
   const getGreetingInfo = () => {
-    const hour = new Date().getHours()
-    let icon, timeClass
-    
-    if (hour >= 5 && hour < 12) {
-      icon = '🌅'
-      timeClass = 'morning'
-    } else if (hour >= 12 && hour < 18) {
-      icon = '☀️'
-      timeClass = 'afternoon'
+    if (settings.useLocalTimeGreeting) {
+      const hour = new Date().getHours();
+      let greeting, icon, timeClass;
+      if (hour >= 5 && hour < 12) {
+        greeting = settings.language === 'en' ? 'Good morning' : 'Buen día';
+        icon = '☀️';
+        timeClass = 'morning';
+      } else if (hour >= 12 && hour < 18) {
+        greeting = settings.language === 'en' ? 'Good afternoon' : 'Buenas tardes';
+        icon = '☀️';
+        timeClass = 'afternoon';
+      } else {
+        greeting = settings.language === 'en' ? 'Good evening' : 'Buenas noches';
+        icon = '🌙';
+        timeClass = 'evening';
+      }
+      return { greeting, icon, timeClass };
+    } else if (weather) {
+      const isDay = weather.current.is_day === 1;
+      let greeting, icon, timeClass;
+      if (isDay) {
+        greeting = settings.language === 'en' ? 'Good morning' : 'Buen día';
+        icon = '☀️';
+        timeClass = 'morning';
+      } else {
+        greeting = settings.language === 'en' ? 'Good evening' : 'Buenas noches';
+        icon = '🌙';
+        timeClass = 'evening';
+      }
+      return { greeting, icon, timeClass };
     } else {
-      icon = '🌙'
-      timeClass = 'evening'
-    }
-    
-    return { 
-      greeting: getGreeting(settings.language), 
-      icon, 
-      timeClass 
+      // Fallback hora local
+      const hour = new Date().getHours();
+      let greeting, icon, timeClass;
+      if (hour >= 5 && hour < 12) {
+        greeting = settings.language === 'en' ? 'Good morning' : 'Buen día';
+        icon = '☀️';
+        timeClass = 'morning';
+      } else if (hour >= 12 && hour < 18) {
+        greeting = settings.language === 'en' ? 'Good afternoon' : 'Buenas tardes';
+        icon = '☀️';
+        timeClass = 'afternoon';
+      } else {
+        greeting = settings.language === 'en' ? 'Good evening' : 'Buenas noches';
+        icon = '🌙';
+        timeClass = 'evening';
+      }
+      return { greeting, icon, timeClass };
     }
   }
 
@@ -268,35 +302,37 @@ function App() {
     return Cloud
   }
 
-  // Get dynamic theme based on weather
+  // Get dynamic theme según preferencia del usuario
   const getWeatherTheme = () => {
-    if (!weather) return 'theme-cloudy'
-    
-    const condition = weather.current.condition.text.toLowerCase()
-    const isDay = weather.current.is_day === 1
-    
+    if (!weather) return 'theme-cloudy';
+    const condition = weather.current.condition.text.toLowerCase();
+    let isDay;
+    if (settings.useLocalTimeGreeting) {
+      const hour = new Date().getHours();
+      isDay = hour >= 5 && hour < 18;
+    } else {
+      isDay = weather.current.is_day === 1;
+    }
     // Night theme regardless of weather
     if (!isDay) {
-      return 'theme-night'
+      return 'theme-night';
     }
-    
     // Day themes based on conditions
     if (condition.includes('lluvia') || condition.includes('rain') || condition.includes('drizzle') || condition.includes('llovizna')) {
-      return 'theme-rainy'
+      return 'theme-rainy';
     } else if (condition.includes('nieve') || condition.includes('snow')) {
-      return 'theme-snow'
+      return 'theme-snow';
     } else if (condition.includes('tormenta') || condition.includes('thunder') || condition.includes('storm')) {
-      return 'theme-storm'
+      return 'theme-storm';
     } else if (condition.includes('niebla') || condition.includes('fog') || condition.includes('mist') || condition.includes('haze')) {
-      return 'theme-fog'
+      return 'theme-fog';
     } else if (condition.includes('despejado') || condition.includes('soleado') || condition.includes('clear') || condition.includes('sunny')) {
-      return 'theme-sunny'
+      return 'theme-sunny';
     } else if (condition.includes('nube') || condition.includes('cloud') || condition.includes('nublado') || condition.includes('overcast')) {
-      return 'theme-cloudy'
+      return 'theme-cloudy';
     }
-    
     // Default to cloudy
-    return 'theme-cloudy'
+    return 'theme-cloudy';
   }
 
   const renderWeatherBackground = () => {
@@ -461,36 +497,30 @@ function App() {
                 color: 'white',
                 textShadow: '0 2px 8px rgba(0,0,0,0.18)'
               }}>
-                {/* Luna solo si el saludo es 'Buenas Noches' */}
-                {getGreetingInfo().greeting === 'Buenas Noches' && (
-                  <span style={{ display: 'inline-flex', alignItems: 'center', verticalAlign: 'middle', marginRight: '10px' }}>
-                    <MoonAnimation />
-                  </span>
-                )}
-                {/* Icono del sol solo si NO es 'Buenas Noches' */}
-                {getGreetingInfo().greeting !== 'Buenas Noches' && <Sun size={24} style={{ color: '#fbbf24' }} />}
-                <h1
-                  className={`greeting-gradient ${getGreetingInfo().timeClass}`}
-                  style={{
-                    margin: 0,
-                    paddingBottom: '2px',
-                    fontFamily: "'Bitcount Grid Single', 'Yatra One', 'Permanent Marker', 'Syne', 'Segoe UI', 'Fira Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Arial, sans-serif",
-                    fontWeight: 'normal',
-                    fontStyle: 'normal',
-                    fontSize: '3.1rem',
-                    color: 'white',
-                    letterSpacing: '0.01em',
-                    textShadow: 'none',
-                    display: 'inline-block',
-                    textAlign: 'center',
-                  }}
-                >
-                  {(() => {
-                    const g = getGreetingInfo().greeting;
-                    if (g === 'Buenas Noches') return 'Buenas noches';
-                    return g;
-                  })()}
-                </h1>
+            {/* Luna solo si es modo noche */}
+            {getGreetingInfo().timeClass === 'evening' && (
+              <span style={{ display: 'inline-flex', alignItems: 'center', verticalAlign: 'middle', marginRight: '10px' }}>
+                <MoonAnimation />
+              </span>
+            )}
+            <h1
+              className={`greeting-gradient ${getGreetingInfo().timeClass}`}
+              style={{
+                margin: 0,
+                paddingBottom: '2px',
+                fontFamily: "'Bitcount Grid Single', 'Yatra One', 'Permanent Marker', 'Syne', 'Segoe UI', 'Fira Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Arial, sans-serif",
+                fontWeight: 'normal',
+                fontStyle: 'normal',
+                fontSize: '3.1rem',
+                color: 'white',
+                letterSpacing: '0.01em',
+                textShadow: 'none',
+                display: 'inline-block',
+                textAlign: 'center',
+              }}
+            >
+              {getGreetingInfo().greeting}
+            </h1>
               </div>
             )}
 

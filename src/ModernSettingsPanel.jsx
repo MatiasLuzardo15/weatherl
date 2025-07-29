@@ -178,6 +178,21 @@ const ModernSettingsPanel = ({ isOpen, onClose, settings, onSettingsChange }) =>
                     <div className="settings-toggle-knob-modern"></div>
                   </div>
                 </div>
+                {/* Toggle para saludo/tema por hora local */}
+                <div className="settings-item-modern">
+                  <div className="settings-item-content-modern">
+                    <div className="settings-item-label-modern">Saludo y tema por hora local</div>
+                    <div className="settings-item-description-modern">
+                      Si desactivas, se usa el estado real del clima (día/noche según API)
+                    </div>
+                  </div>
+                  <div 
+                    className={`settings-toggle-modern ${settings.useLocalTimeGreeting ? 'active' : ''}`}
+                    onClick={() => toggleSetting('useLocalTimeGreeting')}
+                  >
+                    <div className="settings-toggle-knob-modern"></div>
+                  </div>
+                </div>
                 <div className="settings-item-modern">
                   <div className="settings-item-content-modern">
                     <div className="settings-item-label-modern">{t.autoLocation}</div>

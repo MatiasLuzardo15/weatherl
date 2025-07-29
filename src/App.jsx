@@ -32,6 +32,7 @@ import ModernSettingsPanel from './ModernSettingsPanel'
 import WeatherMap from './WeatherMap'
 import WeeklyForecast, { default as WeeklyForecastWithLunar } from './WeeklyForecast'
 import './App.css'
+import MoonAnimation from './MoonAnimation'
 
 const weatherIcons = {
   '01d': Sun,
@@ -460,6 +461,14 @@ function App() {
                 color: 'white',
                 textShadow: '0 2px 8px rgba(0,0,0,0.18)'
               }}>
+                {/* Luna solo si el saludo es 'Buenas Noches' */}
+                {getGreetingInfo().greeting === 'Buenas Noches' && (
+                  <span style={{ display: 'inline-flex', alignItems: 'center', verticalAlign: 'middle', marginRight: '10px' }}>
+                    <MoonAnimation />
+                  </span>
+                )}
+                {/* Icono del sol solo si NO es 'Buenas Noches' */}
+                {getGreetingInfo().greeting !== 'Buenas Noches' && <Sun size={24} style={{ color: '#fbbf24' }} />}
                 <h1
                   className={`greeting-gradient ${getGreetingInfo().timeClass}`}
                   style={{

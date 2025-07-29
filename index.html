@@ -17,7 +17,33 @@
     
     <!-- Meta tags básicos -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#cb6ce6" />
+    <meta name="theme-color" content="#181f2a" id="theme-color-meta" />
+    <script>
+      // Cambia el color de la barra según el tema
+      function setThemeColor(color) {
+        const meta = document.getElementById('theme-color-meta');
+        if (meta) meta.setAttribute('content', color);
+      }
+      // Detecta el tema desde la clase del body
+      function updateThemeColorByClass() {
+        const body = document.body;
+        if (body.classList.contains('theme-night')) {
+          setThemeColor('#181f2a'); // Azul oscuro para noche
+        } else if (body.classList.contains('theme-sunny')) {
+          setThemeColor('#fbbf24'); // Amarillo para soleado
+        } else if (body.classList.contains('theme-cloudy')) {
+          setThemeColor('#64748b'); // Gris para nublado
+        } else if (body.classList.contains('theme-rainy')) {
+          setThemeColor('#2563eb'); // Azul para lluvia
+        } else {
+          setThemeColor('#181f2a'); // Default oscuro
+        }
+      }
+      // Actualiza al cargar y cuando cambie el tema
+      document.addEventListener('DOMContentLoaded', updateThemeColorByClass);
+      const observer = new MutationObserver(updateThemeColorByClass);
+      observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    </script>
     
     <!-- SEO Meta Tags -->
     <title>WeatherL - Aplicación del Clima con Animaciones Apple | Pronóstico del Tiempo</title>

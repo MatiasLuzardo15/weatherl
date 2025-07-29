@@ -502,11 +502,11 @@ body {
 }
 
 .bg-gradient-day-snow {
-  background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
+background: linear-gradient(135deg, #e0e7ef 0%, #b6c6e3 100%);
 }
 
 .bg-gradient-night-snow {
-  background: linear-gradient(135deg, #1e3a8a 0%, #581c87 100%);
+background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
 }
 
 /* Animaciones */
@@ -2747,12 +2747,13 @@ body {
 }
 .snow-flake {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   background: #fff;
   border-radius: 50%;
-  opacity: 0.8;
-  filter: blur(0.5px);
+  opacity: 0.95;
+  filter: blur(0.2px) drop-shadow(0 0 2px #b6c6e3);
+  box-shadow: 0 0 6px 2px #b6c6e3;
   animation: snow-fall 2.5s linear infinite;
 }
 @keyframes snow-fall {

@@ -1656,112 +1656,40 @@ body {
 
 /* Night Theme */
 .theme-night {
-  background: linear-gradient(135deg, #2d3436 0%, #636e72 30%, #74b9ff 100%);
+  background: linear-gradient(135deg, #181c2f 0%, #23243a 100%);
 }
 
 .theme-night .weather-card-modern,
 .theme-night .forecast-card-modern,
 .theme-night .highlight-card-modern,
 .theme-night .map-container-modern {
-  background: linear-gradient(135deg, rgba(45, 52, 54, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
-  border: 1px solid rgba(99, 110, 114, 0.4);
+  background: rgba(24, 28, 47, 0.85);
+  border: 1px solid #23243a;
 }
 
 .theme-night .search-input-modern {
-  background: rgba(45, 52, 54, 0.2);
-  border: 1px solid rgba(99, 110, 114, 0.4);
+  background: rgba(24, 28, 47, 0.18);
+  border: 1px solid #23243a;
 }
 
 .theme-night .tab-switcher-modern,
 .theme-night .temp-unit-modern,
 .theme-night .settings-btn-modern {
-  background: rgba(45, 52, 54, 0.2);
-  border: 1px solid rgba(99, 110, 114, 0.4);
+  background: rgba(24, 28, 47, 0.18);
+  border: 1px solid #23243a;
 }
 
-/* Snow Theme */
-.theme-snow {
-  background: linear-gradient(135deg, #ddd6fe 0%, #c7d2fe 50%, #a5b4fc 100%);
+.theme-night .greeting-gradient {
+  background: none;
 }
 
-.theme-snow .weather-card-modern,
-.theme-snow .forecast-card-modern,
-.theme-snow .highlight-card-modern,
-.theme-snow .map-container-modern {
-  background: linear-gradient(135deg, rgba(221, 214, 254, 0.2) 0%, rgba(255, 255, 255, 0.15) 100%);
-  border: 1px solid rgba(221, 214, 254, 0.4);
+.theme-night .sun-ray,
+.theme-night .weather-bg-sol {
+  display: none !important;
 }
 
-.theme-snow .search-input-modern {
-  background: rgba(221, 214, 254, 0.2);
-  border: 1px solid rgba(221, 214, 254, 0.4);
-}
-
-.theme-snow .tab-switcher-modern,
-.theme-snow .temp-unit-modern,
-.theme-snow .settings-btn-modern {
-  background: rgba(221, 214, 254, 0.2);
-  border: 1px solid rgba(221, 214, 254, 0.4);
-}
-
-/* Storm Theme */
-.theme-storm {
-  background: linear-gradient(135deg, #2d3436 0%, #636e72 30%, #e17055 100%);
-}
-
-.theme-storm .weather-card-modern,
-.theme-storm .forecast-card-modern,
-.theme-storm .highlight-card-modern,
-.theme-storm .map-container-modern {
-  background: linear-gradient(135deg, rgba(45, 52, 54, 0.2) 0%, rgba(225, 112, 85, 0.1) 100%);
-  border: 1px solid rgba(225, 112, 85, 0.3);
-}
-
-.theme-storm .search-input-modern {
-  background: rgba(45, 52, 54, 0.2);
-  border: 1px solid rgba(225, 112, 85, 0.3);
-}
-
-.theme-storm .tab-switcher-modern,
-.theme-storm .temp-unit-modern,
-.theme-storm .settings-btn-modern {
-  background: rgba(45, 52, 54, 0.2);
-  border: 1px solid rgba(225, 112, 85, 0.3);
-}
-
-/* Fog/Mist Theme */
-.theme-fog {
-  background: linear-gradient(135deg, #b2bec3 0%, #636e72 50%, #74b9ff 100%);
-}
-
-.theme-fog .weather-card-modern,
-.theme-fog .forecast-card-modern,
-.theme-fog .highlight-card-modern,
-.theme-fog .map-container-modern {
-  background: linear-gradient(135deg, rgba(178, 190, 195, 0.15) 0%, rgba(255, 255, 255, 0.1) 100%);
-  border: 1px solid rgba(178, 190, 195, 0.3);
-}
-
-.theme-fog .search-input-modern {
-  background: rgba(178, 190, 195, 0.15);
-  border: 1px solid rgba(178, 190, 195, 0.3);
-}
-
-.theme-fog .tab-switcher-modern,
-.theme-fog .temp-unit-modern,
-.theme-fog .settings-btn-modern {
-  background: rgba(178, 190, 195, 0.15);
-  border: 1px solid rgba(178, 190, 195, 0.3);
-}
-
-/* Theme transition */
-.weather-app-container {
-  min-width: 100vw;
-  min-height: 100vh;
-  width: 100vw;
-  height: 100vh;
-  transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow-x: hidden;
+.theme-night .weather-icon-main-modern {
+  color: #e0e0e0 !important;
 }
 
 /* ===== GREETING CARD STYLES ===== */

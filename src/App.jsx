@@ -506,10 +506,10 @@ function App() {
               style={{
                 margin: 0,
                 paddingBottom: '2px',
-                fontFamily: "'Bitcount Grid Single', 'Yatra One', 'Permanent Marker', 'Syne', 'Segoe UI', 'Fira Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Arial, sans-serif",
+                fontFamily: "'Playwrite Magyarország', cursive, 'Segoe UI', 'Fira Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Arial, sans-serif",
                 fontWeight: 'normal',
                 fontStyle: 'normal',
-                fontSize: '3.1rem',
+                fontSize: '4.2rem',
                 color: 'white',
                 letterSpacing: '0.01em',
                 textShadow: 'none',

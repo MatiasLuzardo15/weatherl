@@ -12,7 +12,8 @@ import {
   Globe
 } from 'lucide-react';
 import { LANGUAGES } from './languages';
-import WeatherLLogo from './img/Weatherl.svg.svg';
+// El logo WeatherL no existe en src/img, pero sí hay favicon.svg en public. Usaremos ese para evitar errores.
+import WeatherLLogo from '../public/favicon.svg';
 
 const ModernSettingsPanel = ({ isOpen, onClose, settings, onSettingsChange }) => {
   // Get current language texts

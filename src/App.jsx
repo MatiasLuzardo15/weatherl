@@ -278,28 +278,26 @@ function App() {
     return 'bg-gradient-blue'
   }
 
-  // Get weather icon
+  // Get weather icon principal (tarjeta)
   const getWeatherIcon = () => {
-    if (!weather) return Cloud
-    
-    const condition = weather.current.condition.text.toLowerCase()
-    const isDay = weather.current.is_day === 1
-    
+    if (!weather) return Cloud;
+    const condition = weather.current.condition.text.toLowerCase();
+    // Detecta si el saludo es de noche
+    const isNightGreeting = getGreetingInfo().timeClass === 'evening';
     if (condition.includes('lluvia') || condition.includes('rain')) {
-      return CloudRain
+      return CloudRain;
     } else if (condition.includes('nieve') || condition.includes('snow')) {
-      return CloudSnow
+      return CloudSnow;
     } else if (condition.includes('tormenta') || condition.includes('thunder')) {
-      return CloudLightning
+      return CloudLightning;
     } else if (condition.includes('llovizna') || condition.includes('drizzle')) {
-      return CloudDrizzle
+      return CloudDrizzle;
     } else if (condition.includes('nube') || condition.includes('cloud') || condition.includes('nublado')) {
-      return Cloud
+      return Cloud;
     } else if (condition.includes('despejado') || condition.includes('soleado') || condition.includes('clear') || condition.includes('sunny')) {
-      return Sun
+      return isNightGreeting ? Moon : Sun;
     }
-    
-    return Cloud
+    return Cloud;
   }
 
   // Get dynamic theme según preferencia del usuario

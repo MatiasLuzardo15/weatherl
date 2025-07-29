@@ -505,8 +505,8 @@ function App() {
               className={`greeting-gradient ${getGreetingInfo().timeClass}`}
               style={{
                 margin: 0,
-                paddingBottom: '2px',
-                fontFamily: "'Playwrite Magyarország', cursive, 'Segoe UI', 'Fira Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Arial, sans-serif",
+                paddingBottom: '0px',
+                fontFamily: "'Rock Salt', cursive, 'Segoe UI', 'Fira Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Arial, sans-serif",
                 fontWeight: 'normal',
                 fontStyle: 'normal',
                 fontSize: '4.2rem',
@@ -515,6 +515,7 @@ function App() {
                 textShadow: 'none',
                 display: 'inline-block',
                 textAlign: 'center',
+                lineHeight: 0.95,
               }}
             >
               {getGreetingInfo().greeting}

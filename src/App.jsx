@@ -509,13 +509,13 @@ function App() {
                 fontFamily: "'Rock Salt', cursive, 'Segoe UI', 'Fira Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Arial, sans-serif",
                 fontWeight: 'normal',
                 fontStyle: 'normal',
-                fontSize: '4.2rem',
+                fontSize: '3.2rem',
                 color: 'white',
                 letterSpacing: '0.01em',
                 textShadow: 'none',
-                display: 'inline-block',
+                display: 'block',
                 textAlign: 'center',
-                lineHeight: 0.95,
+                lineHeight: 1.2,
               }}
             >
               {getGreetingInfo().greeting}

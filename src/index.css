@@ -1706,11 +1706,7 @@ background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
 
 /* ===== GREETING CARD STYLES ===== */
 .greeting-card-modern {
-  background: linear-gradient(135deg, 
-    rgba(255, 193, 7, 0.25) 0%,    /* Morning golden */
-    rgba(255, 152, 0, 0.25) 50%,   /* Afternoon orange */
-    rgba(156, 39, 176, 0.25) 100%  /* Evening purple */
-  );
+  background: linear-gradient(180deg, #3a4a5d 0%, #223040 100%);
   backdrop-filter: blur(30px);
   border: 1px solid rgba(255, 193, 7, 0.3);
   border-radius: 20px;

@@ -32,7 +32,7 @@ const getRecommendation = (condition) => {
   } else if (c.includes('nube') || c.includes('cloud') || c.includes('nublado')) {
     return 'Día nublado, ideal para actividades tranquilas.';
   } else if (c.includes('despejado') || c.includes('soleado') || c.includes('clear') || c.includes('sunny')) {
-    return 'Aprovecha el sol, ¡no olvides protector solar!';
+    return 'Día despejado, ideal para salir a caminar o disfrutar actividades al aire libre.';
   }
   return 'Consulta el pronóstico antes de salir.';
 };

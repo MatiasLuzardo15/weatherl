@@ -155,20 +155,40 @@ function ModernWeatherApp() {
     localStorage.setItem('weatherAppSettings', JSON.stringify(settings));
   }, [settings]);
 
+  // Detectar tema de lluvia
+  const isRainy = weatherData && (
+    weatherData.current.condition.text.toLowerCase().includes('lluvia') ||
+    weatherData.current.condition.text.toLowerCase().includes('rain') ||
+    weatherData.current.condition.text.toLowerCase().includes('drizzle') ||
+    weatherData.current.condition.text.toLowerCase().includes('llovizna') ||
+    weatherData.current.condition.text.toLowerCase().includes('shower')
+  );
+
+  // Gradiente de fondo según clima
+  let bgGradient = 'linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #a29bfe 100%)';
+  if (weatherData) {
+    if (isRainy) {
+      bgGradient = 'linear-gradient(135deg, #636e72 0%, #2d3436 50%, #74b9ff 100%)';
+    } else if (weatherData.current.is_day) {
+      bgGradient = 'linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #a29bfe 100%)';
+    } else {
+      bgGradient = 'linear-gradient(135deg, #2d3436 0%, #636e72 50%, #74b9ff 100%)';
+    }
+  }
+
   return (
-    <div style={{ 
-      minHeight: '100vh',
-      background: weatherData 
-        ? weatherData.current.is_day 
-          ? 'linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #a29bfe 100%)'
-          : 'linear-gradient(135deg, #2d3436 0%, #636e72 50%, #74b9ff 100%)'
-        : 'linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #a29bfe 100%)',
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
-      {/* Background overlay */}
-      <div className="bg-gradient-overlay bg-noise" />
-      
+    <div
+      className={`modern-weather-app${isRainy ? ' theme-rainy' : ''}`}
+      style={{
+        minHeight: '100vh',
+        background: bgGradient,
+        position: 'relative',
+        overflow: 'hidden'
+      }}
+    >
+      {/* Fondo animado de lluvia superpuesto */}
+      {isRainy && <div className="weather-bg-lluvia" />}
+
       <div style={{ position: 'relative', zIndex: 10 }} className="container">
         {/* Header */}
         <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>

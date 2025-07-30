@@ -1,3 +1,28 @@
+/* Animación sutil de lluvia */
+/* Fondo y animación de lluvia unificados */
+.weather-bg-lluvia {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: linear-gradient(135deg, #3b5998 0%, #192841 100%);
+  overflow: hidden;
+}
+.weather-bg-lluvia::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    repeating-linear-gradient(180deg, rgba(126, 206, 255, 0.13) 0px, rgba(126, 206, 255, 0.13) 2px, transparent 2px, transparent 12px);
+  animation: rain-bg-move 1.8s linear infinite;
+}
+@keyframes rain-bg-move {
+  0% { background-position-y: 0; }
+  100% { background-position-y: 24px; }
+}
 /* Solución global para overflow horizontal en móvil y zoom */
 html, body {
   max-width: 100vw;
@@ -184,6 +209,8 @@ body {
   min-width: 0;
   margin: 0 auto;
   padding: 0 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 .flex {
@@ -2705,7 +2732,7 @@ background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
 
 /* === ANIMACIONES DE CLIMA === */
 .weather-bg-lluvia {
-  background: linear-gradient(135deg, #3b5998 0%, #192841 100%);
+  /* Ya definido arriba, evitar duplicados */
 }
 
 .weather-bg-nieve {
@@ -2752,7 +2779,7 @@ background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
 }
 
 .weather-bg-lluvia {
-  background: linear-gradient(180deg, #3a4a5d 0%, #223040 100%);
+  /* Ya definido arriba, evitar duplicados */
 }
 @keyframes sun-pulse {
   0%, 100% { opacity: 0.7; box-shadow: 0 0 60px 20px #ffe25988; }

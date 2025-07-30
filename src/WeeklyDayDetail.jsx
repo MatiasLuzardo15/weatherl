@@ -46,14 +46,14 @@ const WeeklyDayDetail = ({ day, onClose }) => {
         <button className="weekly-detail-close" onClick={onClose}>×</button>
         <div className="weekly-detail-header">
           {getWeatherIcon(info.condition.text)}
-          <div className="weekly-detail-date">{new Date(date).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })}</div>
-          <div className="weekly-detail-condition">{info.condition.text}</div>
+          <div className="weekly-detail-date" style={{color: '#fff'}}>{new Date(date).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })}</div>
+          <div className="weekly-detail-condition" style={{color: '#fff'}}>{info.condition.text}</div>
         </div>
         <div className="weekly-detail-temps">
-          <span className="weekly-detail-temp-high">{Math.round(info.maxtemp_c)}°C</span>
-          <span className="weekly-detail-temp-low">{Math.round(info.mintemp_c)}°C</span>
+          <span className="weekly-detail-temp-high" style={{color: '#ffe7a0'}}>{Math.round(info.maxtemp_c)}°C</span>
+          <span className="weekly-detail-temp-low" style={{color: '#b3e6ff'}}>{Math.round(info.mintemp_c)}°C</span>
         </div>
-        <div className="weekly-detail-stats">
+        <div className="weekly-detail-stats" style={{color: '#e0e6ed'}}>
           <div><Thermometer size={18}/> Sensación: {Math.round(info.avgtemp_c)}°C</div>
           <div><Droplets size={18}/> Humedad: {info.avghumidity}%</div>
           <div><Wind size={18}/> Viento: {Math.round(info.maxwind_kph)} km/h</div>

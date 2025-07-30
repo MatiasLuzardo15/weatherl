@@ -2719,24 +2719,7 @@ background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
 
 /* === ANIMACIONES DE CLIMA === */
 .weather-bg-lluvia {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-}
-.rain-drop {
-  position: absolute;
-  width: 2px;
-  height: 18px;
-  background: linear-gradient(180deg, #aeeaff 0%, #4fc3f7 100%);
-  border-radius: 1px;
-  opacity: 0.7;
-  animation: rain-fall 0.9s linear infinite;
-}
-@keyframes rain-fall {
-  0% { transform: translateY(-30px); opacity: 0.7; }
-  80% { opacity: 0.8; }
-  100% { transform: translateY(100vh); opacity: 0; }
+  background: linear-gradient(135deg, #3b5998 0%, #192841 100%);
 }
 
 .weather-bg-nieve {
@@ -2782,24 +2765,8 @@ background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
   100% { left: 110vw; }
 }
 
-.weather-bg-sol {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-}
-.sun-ray {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffe259 60%, #ffa751 100%);
-  box-shadow: 0 0 60px 20px #ffe25988;
-  opacity: 0.7;
-  margin: 2.5rem 2.5rem 0 0;
-  animation: sun-pulse 2.5s ease-in-out infinite;
+.weather-bg-lluvia {
+  background: linear-gradient(180deg, #3a4a5d 0%, #223040 100%);
 }
 @keyframes sun-pulse {
   0%, 100% { opacity: 0.7; box-shadow: 0 0 60px 20px #ffe25988; }

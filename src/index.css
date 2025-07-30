@@ -30,7 +30,7 @@ html, body {
   position: relative;
   z-index: 1;
   animation: sunMoonGlow 2.8s ease-in-out infinite alternate;
-  box-shadow: 0 0 24px 0 rgba(255, 230, 102, 0.18), 0 0 48px 0 rgba(125, 183, 255, 0.13);
+  box-shadow: none;
 }
 
 @keyframes sunMoonGlow {
@@ -71,8 +71,7 @@ html, body {
   transition: background 0.5s;
   background: radial-gradient(circle, #0a3d62 0%, #3c6382 60%, transparent 100%);
 }
-.greeting-gradient.morning::before {
-  background: radial-gradient(circle, #ffe259 0%, #ffa751 60%, transparent 100%);
+  background: none;
 }
 .greeting-gradient.afternoon::before {
   background: radial-gradient(circle, #ff9966 0%, #ff5e62 60%, transparent 100%);
@@ -1708,7 +1707,7 @@ background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
 .greeting-card-modern {
   background: linear-gradient(180deg, #3a4a5d 0%, #223040 100%);
   backdrop-filter: blur(30px);
-  border: 1px solid rgba(255, 193, 7, 0.3);
+  border: none;
   border-radius: 20px;
   padding: 1.5rem;
   box-shadow: var(--shadow-glass);
@@ -1756,29 +1755,20 @@ background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
 
 /* Morning greeting */
 .greeting-card-modern.morning {
-  background: linear-gradient(135deg, 
-    rgba(255, 193, 7, 0.3) 0%,
-    rgba(255, 235, 59, 0.25) 100%
-  );
-  border-color: rgba(255, 193, 7, 0.4);
+  background: linear-gradient(180deg, #3a4a5d 0%, #223040 100%);
+  border-color: transparent;
 }
 
 /* Afternoon greeting */
 .greeting-card-modern.afternoon {
-  background: linear-gradient(135deg, 
-    rgba(255, 152, 0, 0.3) 0%,
-    rgba(255, 87, 34, 0.25) 100%
-  );
-  border-color: rgba(255, 152, 0, 0.4);
+  background: linear-gradient(180deg, #3a4a5d 0%, #223040 100%);
+  border-color: transparent;
 }
 
 /* Evening greeting */
 .greeting-card-modern.evening {
-  background: linear-gradient(135deg, 
-    rgba(156, 39, 176, 0.3) 0%,
-    rgba(103, 58, 183, 0.25) 100%
-  );
-  border-color: rgba(156, 39, 176, 0.4);
+  background: linear-gradient(180deg, #3a4a5d 0%, #223040 100%);
+  border-color: transparent;
 }
 
 /* Language switcher */

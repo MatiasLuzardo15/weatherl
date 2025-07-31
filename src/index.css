@@ -94,7 +94,7 @@ html, body {
   filter: blur(38px);
   pointer-events: none;
   transition: background 0.5s;
-  background: radial-gradient(circle, #0a3d62 0%, #3c6382 60%, transparent 100%);
+  background: none;
 }
   background: none;
 }
@@ -2739,7 +2739,8 @@ background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
   pointer-events: none;
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: -2;
+  background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
 }
 .snow-flake {
   position: absolute;

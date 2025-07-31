@@ -336,21 +336,31 @@ function App() {
   const renderWeatherBackground = () => {
     if (!weather) return null;
     const condition = weather.current.condition.text.toLowerCase();
-    if (condition.includes('lluvia') || condition.includes('rain')) {
-      // Lluvia: muchas gotas
+    if (
+      condition.includes('lluvia') ||
+      condition.includes('rain') ||
+      condition.includes('drizzle') ||
+      condition.includes('llovizna') ||
+      condition.includes('shower')
+    ) {
+      // Lluvia: animación sutil y gotas
       return (
         <div className="weather-bg-lluvia">
-          {Array.from({ length: 32 }).map((_, i) => (
-            <div
-              key={i}
-              className="rain-drop"
-              style={{
-                left: `${Math.random() * 100}vw`,
-                animationDelay: `${Math.random() * 0.9}s`,
-                top: `${Math.random() * 10}vh`
-              }}
-            />
-          ))}
+          {/* Animación sutil de fondo por CSS */}
+          {/* Gotas extra si es lluvia fuerte o shower */}
+          {(condition.includes('lluvia') || condition.includes('rain') || condition.includes('shower')) &&
+            Array.from({ length: 24 }).map((_, i) => (
+              <div
+                key={i}
+                className="rain-drop"
+                style={{
+                  left: `${Math.random() * 100}vw`,
+                  animationDelay: `${Math.random() * 0.9}s`,
+                  top: `${Math.random() * 10}vh`
+                }}
+              />
+            ))
+          }
         </div>
       );
     } else if (condition.includes('nieve') || condition.includes('snow')) {

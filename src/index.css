@@ -2738,9 +2738,14 @@ background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
 .weather-bg-nieve {
   pointer-events: none;
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: -2;
   background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
+  overflow: hidden;
+  transition: background 0.5s;
 }
 .snow-flake {
   position: absolute;

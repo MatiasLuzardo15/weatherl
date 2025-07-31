@@ -176,9 +176,15 @@ function ModernWeatherApp() {
     }
   }
 
+  // Detectar tema de nieve
+  const isSnowy = weatherData && (
+    weatherData.current.condition.text.toLowerCase().includes('nieve') ||
+    weatherData.current.condition.text.toLowerCase().includes('snow')
+  );
+
   return (
     <div
-      className={`modern-weather-app${isRainy ? ' theme-rainy' : ''}`}
+      className={`modern-weather-app${isRainy ? ' theme-rainy' : isSnowy ? ' theme-snowy' : ''}`}
       style={{
         minHeight: '100vh',
         background: bgGradient,
@@ -188,6 +194,8 @@ function ModernWeatherApp() {
     >
       {/* Fondo animado de lluvia superpuesto */}
       {isRainy && <div className="weather-bg-lluvia" />}
+      {/* Fondo animado de nieve superpuesto */}
+      {isSnowy && <div className="weather-bg-nieve" />}
 
       <div style={{ position: 'relative', zIndex: 10 }} className="container">
         {/* Header */}

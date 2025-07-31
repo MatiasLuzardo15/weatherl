@@ -1,3 +1,23 @@
+.moon-animation::after {
+  content: '';
+  position: absolute;
+  top: -18px;
+  left: -18px;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f7f3e3 0%, transparent 80%);
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 1;
+  animation: moon-glow 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes moon-glow {
+  0% { opacity: 0.12; }
+  50% { opacity: 0.22; }
+  100% { opacity: 0.12; }
+}
 .moon-animation {
   position: absolute;
   top: 32px;

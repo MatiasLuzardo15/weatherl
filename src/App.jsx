@@ -343,24 +343,19 @@ function App() {
       condition.includes('llovizna') ||
       condition.includes('shower')
     ) {
-      // Lluvia: animación sutil y gotas
+      // Lluvia: animación ultra liviana con líneas
       return (
         <div className="weather-bg-lluvia">
-          {/* Animación sutil de fondo por CSS */}
-          {/* Gotas extra si es lluvia fuerte o shower */}
-          {(condition.includes('lluvia') || condition.includes('rain') || condition.includes('shower')) &&
-            Array.from({ length: 24 }).map((_, i) => (
-              <div
-                key={i}
-                className="rain-drop"
-                style={{
-                  left: `${Math.random() * 100}vw`,
-                  animationDelay: `${Math.random() * 0.9}s`,
-                  top: `${Math.random() * 10}vh`
-                }}
-              />
-            ))
-          }
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div
+              key={i}
+              className="rain-stripe"
+              style={{
+                left: `${(i * 100) / 12 + Math.random() * 5}vw`,
+                animationDelay: `${Math.random() * 1.2}s`
+              }}
+            />
+          ))}
         </div>
       );
     } else if (condition.includes('nieve') || condition.includes('snow')) {

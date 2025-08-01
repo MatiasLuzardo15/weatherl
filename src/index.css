@@ -25,21 +25,22 @@
   height: 100vh;
   z-index: -1;
   background: linear-gradient(135deg, #3b5998 0%, #192841 100%);
+  pointer-events: none;
   overflow: hidden;
 }
-.weather-bg-lluvia::before {
-  content: '';
+.rain-stripe {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image:
-    repeating-linear-gradient(180deg, rgba(126, 206, 255, 0.13) 0px, rgba(126, 206, 255, 0.13) 2px, transparent 2px, transparent 12px);
-  animation: rain-bg-move 1.8s linear infinite;
+  width: 2px;
+  height: 38px;
+  background: rgba(180,220,255,0.18);
+  border-radius: 1px;
+  top: -40px;
+  left: 0;
+  animation: rain-stripe-fall 1.1s linear infinite;
 }
-@keyframes rain-bg-move {
-  0% { background-position-y: 0; }
-  100% { background-position-y: 24px; }
+@keyframes rain-stripe-fall {
+  0% { transform: translateY(0); opacity: 0.7; }
+  100% { transform: translateY(110vh); opacity: 0.1; }
 }
 /* Solución global para overflow horizontal en móvil y zoom */
 html, body {
@@ -2750,7 +2751,7 @@ background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
 
 /* === ANIMACIONES DE CLIMA === */
 .weather-bg-lluvia {
-  /* Ya definido arriba, evitar duplicados */
+  /* Eliminado: duplicado innecesario */
 }
 
 .weather-bg-nieve {
@@ -2803,7 +2804,7 @@ background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
 }
 
 .weather-bg-lluvia {
-  /* Ya definido arriba, evitar duplicados */
+  /* Eliminado: duplicado innecesario */
 }
 @keyframes sun-pulse {
   0%, 100% { opacity: 0.7; box-shadow: 0 0 60px 20px #ffe25988; }

@@ -1,3 +1,21 @@
+  html[lang="en"] .weather-description-modern {
+    font-size: 0.85rem !important;
+    line-height: 1.2 !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    max-width: 98vw;
+    padding: 0.05rem 0.02rem !important;
+  }
+  /* Saludo más pequeño solo en inglés */
+  html[lang="en"] .greeting-gradient {
+    font-size: 1.15rem !important;
+    line-height: 1.05 !important;
+    padding: 0.08rem 0.04rem !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    max-width: 98vw;
+  }
+  }
 /* Animación sutil de lluvia */
 /* Fondo y animación de lluvia unificados */
 .weather-bg-lluvia {

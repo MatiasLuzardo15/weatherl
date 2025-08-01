@@ -2740,6 +2740,89 @@ background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
     padding: 1.2rem 0.5rem 1.2rem 0.5rem;
   }
 }
+
+/* Layout automático para móviles */
+@media (max-width: 768px) {
+  .modern-weather-app {
+    width: 100vw !important;
+    min-width: auto !important;
+    max-width: 100vw !important;
+    padding: 0.5rem !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+  
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0.5rem !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Ajuste automático del grid */
+  main {
+    display: block !important;
+    grid-template-columns: none !important;
+    gap: 1rem !important;
+  }
+  
+  /* Saludo adaptable - más grande que descripción */
+  .greeting-gradient {
+    font-size: clamp(2.8rem, 10vw, 5rem) !important;
+    line-height: 1.1 !important;
+    padding: 0.5rem !important;
+    text-align: center !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    hyphens: auto !important;
+  }
+  
+  /* Descripción adaptable - más pequeña que saludo */
+  .weather-description-modern {
+    font-size: clamp(0.95rem, 4.5vw, 1.3rem) !important;
+    line-height: 1.4 !important;
+    padding: 0.25rem !important;
+    text-align: center !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    hyphens: auto !important;
+  }
+  
+  /* Tarjetas responsivas */
+  .weather-card-main,
+  .forecast-card,
+  .highlights-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0.5rem 0 !important;
+    padding: 1rem !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* Para dispositivos muy pequeños */
+@media (max-width: 350px) {
+  .modern-weather-app {
+    padding: 0.25rem !important;
+  }
+  
+  .container {
+    padding: 0.25rem !important;
+  }
+  
+  .greeting-gradient {
+    font-size: clamp(2.2rem, 10vw, 3.5rem) !important;
+    padding: 0.25rem !important;
+    hyphens: auto !important;
+  }
+  
+  .weather-description-modern {
+    font-size: clamp(0.85rem, 5vw, 1.2rem) !important;
+    padding: 0.125rem !important;
+    hyphens: auto !important;
+  }
+}
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }

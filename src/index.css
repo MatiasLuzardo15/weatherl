@@ -2767,15 +2767,17 @@ background: linear-gradient(135deg, #232946 0%, #5a5c7e 100%);
     gap: 1rem !important;
   }
   
-  /* Saludo adaptable - más grande que descripción */
+  /* Saludo adaptable - ajustado para iPhone 15 Pro Max */
   .greeting-gradient {
-    font-size: clamp(2.8rem, 10vw, 5rem) !important;
-    line-height: 1.1 !important;
-    padding: 0.5rem !important;
+    font-size: clamp(2.4rem, 7vw, 4.2rem) !important;
+    line-height: 1.05 !important;
+    padding: 0.4rem 0.2rem !important;
     text-align: center !important;
     word-break: break-word !important;
     overflow-wrap: anywhere !important;
     hyphens: auto !important;
+    max-width: 95vw !important;
+    margin: 0 auto !important;
   }
   
   /* Descripción adaptable - más pequeña que saludo */

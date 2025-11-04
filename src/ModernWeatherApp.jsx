@@ -21,7 +21,8 @@ import { weatherPhrases } from './weatherPhrases';
 import './modern-styles.css';
 
 import SunMoonTimesCard from './SunMoonTimesCard';
-const API_KEY = '528f46b8804049b9a89222651252407';
+import { WEATHER_API_CONFIG } from './config';
+const API_KEY = WEATHER_API_CONFIG.API_KEY;
 const BASE_URL = 'https://api.weatherapi.com/v1';
 
 function ModernWeatherApp() {

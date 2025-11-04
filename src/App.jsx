@@ -136,12 +136,21 @@ function App() {
 
   const fetchForecast = async (location) => {
     try {
-      const response = await fetch(
-        `${WEATHER_API_CONFIG.BASE_URL}/forecast.json?key=${WEATHER_API_CONFIG.API_KEY}&q=${location}&days=7&aqi=no&alerts=no&lang=es`
-      )
+      console.log('Fetching forecast for:', location)
+      const url = `${WEATHER_API_CONFIG.BASE_URL}/forecast.json?key=${WEATHER_API_CONFIG.API_KEY}&q=${location}&days=7&aqi=no&alerts=no&lang=es`
+      console.log('API URL:', url)
+      
+      const response = await fetch(url)
       const data = await response.json()
+      
       if (response.ok) {
+        console.log('Forecast data received:', data)
+        if (data.forecast?.forecastday?.length) {
+          console.log('Number of forecast days:', data.forecast.forecastday.length)
+        }
         setForecast(data)
+      } else {
+        console.error('API Error:', data.error || 'Unknown error')
       }
     } catch (err) {
       console.error('Error fetching forecast:', err)

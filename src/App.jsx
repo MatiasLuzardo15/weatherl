@@ -137,6 +137,7 @@ function App() {
   const fetchForecast = async (location) => {
     try {
       console.log('Fetching forecast for:', location)
+      // Ajustamos a 3 días ya que es el límite del plan gratuito
       const url = `${WEATHER_API_CONFIG.BASE_URL}/forecast.json?key=${WEATHER_API_CONFIG.API_KEY}&q=${location}&days=7&aqi=no&alerts=no&lang=es`
       console.log('API URL:', url)
       
